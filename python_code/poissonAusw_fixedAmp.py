@@ -211,6 +211,7 @@ def justPlot(ys):
     ax1.set_ylabel("frequency n")
     ax2.set_ylabel("residue")
     
+    plt.savefig("../test.pdf", format="pdf")
 
 
 

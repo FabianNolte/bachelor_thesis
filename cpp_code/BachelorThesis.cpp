@@ -20,7 +20,7 @@ const double b = 0;
 const double imgTime = 20;
 const int numImgTimeSlices = 20;
 const int x_1_sampleArea[2] = {-10, 10};
-const int num_x_1 = 40;
+const int num_x_1 = 400;
 
 const double PI = 3.141592653589793238463;
 //const double H_BAR = 
@@ -57,6 +57,16 @@ void printArray(float* arr, int lenarr)
 //	}
 //}
 
+void runPyScr_plot_x_1(string path, string dataname, float left, float right, int histnum)
+{
+	string filename = "../python_code/plot_x_1.py";
+	string command = "python ";
+	string args = " " + path + " " + dataname + " " + to_string(left) + " " + to_string(right) + " "+ to_string(histnum);
+
+	command += filename += args;
+	cout << endl << command << endl;
+	system(command.c_str());
+}
 
 
 double potential(double x)
@@ -124,7 +134,9 @@ class InitialDistr
 		void save_x_1(string  folder, string  name) {
 			ofstream x_1_savefile;
 			x_1_savefile.open(folder + name + ".txt");
-			x_1_savefile << "Writing this to a file.\n";
+			for (int i = 0; i<length_x_1; ++i){
+				x_1_savefile << x_1[i] << endl;
+			}
 			x_1_savefile.close();
 		}
 
@@ -151,7 +163,9 @@ int main()
 	float* x_1 = inst_initialDistr.get_x_1();
 	std::cout << "\n preprint";
 	printArray(x_1, num_x_1);
-	inst_initialDistr.save_x_1("./", "test1");
+	inst_initialDistr.save_x_1("../data/", "x_1");
+	runPyScr_plot_x_1("../data/", "x_1", x_1_sampleArea[0], x_1_sampleArea[1], 60);
+
 /*
 	double x_1_vals [numx_val];*/
 	//{
