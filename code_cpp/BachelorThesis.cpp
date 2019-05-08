@@ -59,7 +59,7 @@ void printArray(float* arr, int lenarr)
 
 void runPyScr_plot_x_1(string path, string dataname, float left, float right, int histnum)
 {
-	string filename = "../python_code/plot_x_1.py";
+	string filename = "../code_python/plot_x_1.py";
 	string command = "python ";
 	string args = " " + path + " " + dataname + " " + to_string(left) + " " + to_string(right) + " "+ to_string(histnum);
 
