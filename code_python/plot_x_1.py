@@ -34,6 +34,6 @@ ax1 = plt.axes([.12,.15,.85,.75])
 bins = np.linspace(left, right, histnum+1)
 ns, b_bins, patches = ax1.hist(x_1, bins=bins, alpha=0.5, label="data")
 
-plt.savefig("../images/x_1.pdf", format="pdf")
+plt.savefig("../images/{}.pdf".format(dataname), format="pdf")
 
 print(len(x_1))

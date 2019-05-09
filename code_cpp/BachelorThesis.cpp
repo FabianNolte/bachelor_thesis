@@ -7,18 +7,19 @@
 #include <random>
 #include <cmath>
 #include <string>
+#include <stack>
 using namespace std;
 
 std::random_device rd{};
 std::mt19937 gen{ rd() };
 
-const double E = 0;
+const double E = 0.5;
 const double m = 1;
 const double w = 1;
 const double b = 0;
 
 const double imgTime = 20;
-const int numImgTimeSlices = 20;
+const int numImgTimeSlices = 50;
 const int x_1_sampleArea[2] = {-10, 10};
 const int num_x_1 = 400;
 
@@ -29,9 +30,9 @@ const double STD = pow(EPSILON / m, 0.5);
 
 //Beginning function
 const double maxPhi = pow(m * w / PI, 0.25);
-float Phi(double x)
+double Phi(double x)
 {
-	return float(pow(m * w / PI, 0.25)* exp(-0.5 * m * w * pow(x, 2)));
+	return pow(m * w / PI, 0.25)* exp(-0.5 * m * w * pow(x, 2));
 }
 
 
@@ -69,9 +70,25 @@ void runPyScr_plot_x_1(string path, string dataname, float left, float right, in
 }
 
 
-double potential(double x)
+double givenPotential(double x)
 {
 	return 0.5* m* pow(w, 2)* pow(x, 2) + b * pow(x, 4);
+}
+
+double givenW(double x_n, double E, double evolution_step)
+{
+	return exp(-evolution_step * (givenPotential(x_n) - E));
+}
+
+stack<double>* givenP(double x_n, double evolution_step, int toGenerateNum)
+{
+	double sigma = pow(evolution_step/m, 0.5);
+	stack<double>* x_nPlus1 = new stack<double>;
+	std::normal_distribution<double> gen_x_nPlus1{ x_n,sigma };
+	for(int i = 0; i < toGenerateNum; ++i){
+		(*x_nPlus1).push(gen_x_nPlus1(gen));
+	}
+	return x_nPlus1;
 }
 
 double nextGen(double x_nMinus1)
@@ -81,17 +98,14 @@ double nextGen(double x_nMinus1)
 }
 
 
-double W(double x_nMinus1)
-{
-	return exp(-EPSILON * (potential(x_nMinus1) - E));
-}
+
 
 
 
 class InitialDistr
 {
 	private:
-		float* x_1;
+		double* x_1;
 		int length_x_1;
 
 	public:
@@ -107,30 +121,113 @@ class InitialDistr
 		void generate_x_val(void);
 		// generate_x_val - uses Neumann rejection to generate the x_1 distribution according to Phi
 
-		float* get_x_1(void);
+		double* get_x_1(void);
 		// get_x_1 - getter function for x_1
-		// @return float* - addres of x_1 float array (located on heap)
+		// @return double* - addres of x_1 double array (located on heap)
+
+		int get_length_x_1(void);
+		// get_length_x_1 - getter function for length_x_1
+		// @return int - number of elements in x_1
 
 		void save_x_1(string , string);
 		// save_x_1 - saves x_1 into a txt-file 
 		// @param string - folder location to save to
-		// @param sting - dataname to save to
+		// @param string - dataname to save to
 
 };
 
 class Evolution
 {
 	private:
-		float* x_1;
+		double* x_1;
 		int length_x_1;
+		double* x_N;
+		int length_x_N;
+
+		int evolution_stepNum;
+		double evolution_step;
+
+		double E;
+		
+		int replicationNum = 0;
+
+		double (*W_x_n)(double, double, double);
+		stack<double>* (*P_x_n_to_x_nPlus1)(double, double, int);
 
 	public:
-		Evolution(float* p_x_1, int p_length_x_1, double)
+		Evolution(double* p_x_1, int p_length_x_1)
 		{
 			x_1 = p_x_1;
 			length_x_1 = p_length_x_1;
 		}
 
+		void evolution_caller(int p_evolution_stepNum, double p_evolution_step, double p_E, double (*p_W_x_n)(double, double, double), stack<double>* (*p_P_x_n_to_x_nPlus1)(double, double, int))
+		{
+			evolution_stepNum = p_evolution_stepNum;
+			evolution_step = p_evolution_step;
+			W_x_n = p_W_x_n;
+			P_x_n_to_x_nPlus1 = p_P_x_n_to_x_nPlus1;
+			E = p_E;
+			stack<double> stack_x_N;
+			for(int i = 0; i < length_x_1; ++i) {
+				evolution_executer(x_1[i], 1, stack_x_N);
+				cout << "finished with x_1_i = " << i << endl;
+			}
+			length_x_N = stack_x_N.size();
+			x_N = new double[length_x_N];
+			for(int i = 0; i < length_x_N; ++i) {
+				x_N[i] = stack_x_N.top();
+				stack_x_N.pop();
+			}
+		}
+
+		void evolution_executer(double x_n, int n, stack<double>& stack_x_N)
+		{
+			if(n == evolution_stepNum){
+				//add to result stack
+				stack_x_N.push(x_n);
+			}
+
+			else{
+				//calc multipicity accorting to W
+				int replicationNumFor_x_n = calc_replicationNumFor_x_n(x_n);
+				replicationNum += replicationNumFor_x_n;
+				//calc x_nPlus1 according to P with multipicity according to W
+				
+				//TODO =0 question
+				stack<double>* x_nPlus1 = P_x_n_to_x_nPlus1(x_n, evolution_step, replicationNumFor_x_n);
+				//call evolution_executer for all x_nPlus1
+				for(int i=0; i < replicationNumFor_x_n; ++i){
+					evolution_executer((*x_nPlus1).top(), n+1, stack_x_N);
+					(*x_nPlus1).pop();
+				}
+			}
+		}
+
+		int calc_replicationNumFor_x_n(double x_n)
+		{
+			int replicationNumFor_x_n;
+			double W = W_x_n(x_n, E, evolution_step);
+			replicationNumFor_x_n = int(W);
+			std::uniform_real_distribution<double> d_accept(0, 1);
+			if(d_accept(gen) <= W-replicationNumFor_x_n){
+				++replicationNumFor_x_n;
+			}
+			return replicationNumFor_x_n;
+		}
+
+		double* get_x_N(void);
+		// get_x_N - getter function for x_N
+		// @return double* - addres of x_N double array (located on heap)
+
+		int get_length_x_N(void);
+		// get_length_x_N - getter function for length_x_N
+		// @return int - number of elements in x_N
+
+		void save_x_N(string , string);
+		// save_x_N - saves x_N into a txt-file 
+		// @param string - folder location to save to
+		// @param string - dataname to save to
 };
 
 
@@ -152,15 +249,24 @@ int main()
 	InitialDistr inst_initialDistr;
 	inst_initialDistr.print_x_1_sampleArea();
 	inst_initialDistr.generate_x_val();
-	float* x_1 = inst_initialDistr.get_x_1();
+	double* x_1 = inst_initialDistr.get_x_1();
+	int length_x_1 = inst_initialDistr.get_length_x_1();
 	//printArray(x_1, num_x_1);
 	inst_initialDistr.save_x_1("../data/", "x_1");
-	runPyScr_plot_x_1("../data/", "x_1", x_1_sampleArea[0], x_1_sampleArea[1], 60);
+	//runPyScr_plot_x_1("../data/", "x_1", x_1_sampleArea[0], x_1_sampleArea[1], 60);
+
+	Evolution inst_evolution(x_1, length_x_1);
+	inst_evolution.evolution_caller(numImgTimeSlices, EPSILON, E, givenW, givenP);
+	cout << "vor save_x_N" << endl;
+	inst_evolution.save_x_N("../data/", "x_N");
+	runPyScr_plot_x_1("../data/", "x_N", x_1_sampleArea[0], x_1_sampleArea[1], 60);
 
 	//int* hint = new int;
 	//*hint = 6;
 	//std::cout << "\n" << *hint;
 	//system("pause");
+
+	delete[] x_1;
 }
 
 
@@ -175,13 +281,13 @@ void InitialDistr::print_x_1_sampleArea(void)
 
 void InitialDistr::generate_x_val(void)
 {
-	x_1 = new float[num_x_1];
-	std::uniform_real_distribution<float> d_x_i(x_1_sampleArea[0], x_1_sampleArea[1]);
-	std::uniform_real_distribution<float> d_accept(0, maxPhi);
+	x_1 = new double[num_x_1];
+	std::uniform_real_distribution<double> d_x_i(x_1_sampleArea[0], x_1_sampleArea[1]);
+	std::uniform_real_distribution<double> d_accept(0, maxPhi);
 	for (int i = 0; i < num_x_1;) {
-		float x_1_i = d_x_i(gen);
-		float accept_theshold = d_accept(gen);
-		if (Phi(x_1_i) > accept_theshold) {
+		double x_1_i = d_x_i(gen);
+		double accept_theshold = d_accept(gen);
+		if (Phi(x_1_i) >= accept_theshold) {
 			x_1[i] = x_1_i;
 			++i;
 		}
@@ -191,8 +297,12 @@ void InitialDistr::generate_x_val(void)
 	length_x_1 = num_x_1;
 }
 
-float* InitialDistr::get_x_1(void) {
+double* InitialDistr::get_x_1(void) {
 	return x_1;
+}
+
+int InitialDistr::get_length_x_1(void) {
+	return length_x_1;
 }
 
 void InitialDistr::save_x_1(string  folder, string  name) {
@@ -203,6 +313,27 @@ void InitialDistr::save_x_1(string  folder, string  name) {
 	}
 	x_1_savefile.close();
 }
+
+
+
+double* Evolution::get_x_N(void) {
+	return x_N;
+}
+
+int Evolution::get_length_x_N(void) {
+	return length_x_N;
+}
+
+void Evolution::save_x_N(string  folder, string  name) {
+	ofstream x_N_savefile;
+	x_N_savefile.open(folder + name + ".txt");
+	for (int i = 0; i<length_x_N; ++i){
+		x_N_savefile << x_N[i] << endl;
+	}
+	cout << folder + name + ".txt" << endl;
+	x_N_savefile.close();
+}
+
 
 // Programm ausführen: STRG+F5 oder "Debuggen" > Menü "Ohne Debuggen starten"
 // Programm debuggen: F5 oder "Debuggen" > Menü "Debuggen starten"
