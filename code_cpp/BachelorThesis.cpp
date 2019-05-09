@@ -91,56 +91,48 @@ double W(double x_nMinus1)
 class InitialDistr
 {
 	private:
-		float* x_1;;
+		float* x_1;
 		int length_x_1;
 
 	public:
-		InitialDistr() 
+		// InitialDistr() 
+		// {
+		// 	//std::copy(x_1_sampleArea, x_1_sampleArea + 2, pr_x_1_sampleArea);
+		// 	//pr_num_x_1 = num_x_1;
+		// }
+
+		void print_x_1_sampleArea(void);
+		// print_x_1_sampleArea - print the sample Area of x_1
+
+		void generate_x_val(void);
+		// generate_x_val - uses Neumann rejection to generate the x_1 distribution according to Phi
+
+		float* get_x_1(void);
+		// get_x_1 - getter function for x_1
+		// @return float* - addres of x_1 float array (located on heap)
+
+		void save_x_1(string , string);
+		// save_x_1 - saves x_1 into a txt-file 
+		// @param string - folder location to save to
+		// @param sting - dataname to save to
+
+};
+
+class Evolution
+{
+	private:
+		float* x_1;
+		int length_x_1;
+
+	public:
+		Evolution(float* p_x_1, int p_length_x_1, double)
 		{
-			//std::copy(x_1_sampleArea, x_1_sampleArea + 2, pr_x_1_sampleArea);
-			//pr_num_x_1 = num_x_1;
-		}
-
-		void print_x_1_sampleArea(void)
-		{
-			std::cout << "\n begin: " << x_1_sampleArea[0] << "\n end: " << x_1_sampleArea[1];
-		}
-
-		void generate_x_val(void)
-		{
-			x_1 = new float[num_x_1];
-			std::uniform_real_distribution<float> d_x_i(x_1_sampleArea[0], x_1_sampleArea[1]);
-			std::uniform_real_distribution<float> d_accept(0, maxPhi);
-			for (int i = 0; i < num_x_1;) {
-				float x_1_i = d_x_i(gen);
-				std::cout << "\n" << x_1_i;
-				float accept_theshold = d_accept(gen);
-				if (Phi(x_1_i) > accept_theshold) {
-					x_1[i] = x_1_i;
-					std::cout << "\n jay: " << x_1[i];
-					++i;
-				}
-				
-			}
-			std::cout << "\n array";
-			printArray(x_1, num_x_1);
-			length_x_1 = num_x_1;
-		}
-
-		float* get_x_1(void) {
-			return x_1;
-		}
-
-		void save_x_1(string  folder, string  name) {
-			ofstream x_1_savefile;
-			x_1_savefile.open(folder + name + ".txt");
-			for (int i = 0; i<length_x_1; ++i){
-				x_1_savefile << x_1[i] << endl;
-			}
-			x_1_savefile.close();
+			x_1 = p_x_1;
+			length_x_1 = p_length_x_1;
 		}
 
 };
+
 
 
 
@@ -161,48 +153,57 @@ int main()
 	inst_initialDistr.print_x_1_sampleArea();
 	inst_initialDistr.generate_x_val();
 	float* x_1 = inst_initialDistr.get_x_1();
-	std::cout << "\n preprint";
-	printArray(x_1, num_x_1);
+	//printArray(x_1, num_x_1);
 	inst_initialDistr.save_x_1("../data/", "x_1");
 	runPyScr_plot_x_1("../data/", "x_1", x_1_sampleArea[0], x_1_sampleArea[1], 60);
-
-/*
-	double x_1_vals [numx_val];*/
-	//{
-	//	double x_val_dist = float(x_valArea[1] - x_valArea[0]) / numx_val;
-	//	float x_i = x_valArea[0];
-	//	for (int i = 0; i < numx_val; x_i += x_val_dist, ++i) {
-	//		x_vals[i] = x_i;
-	//	}
-	//}
-	//for (int i = 0; i < numx_val; ++i) {
-	//	std::cout << "\n" << x_vals[i];
-	//}
-	//double Psi[numx_val];
-
-	//for (int i = 0; i < numx_val; ++i) {
-
-	//}
-
-	//std::map<int, int> hist{};
-	//for (int n = 0; n < 10000; ++n) {
-	//	++hist[std::round(d(gen))];
-	//}
-	//for (auto p : hist) {
-	//	std::cout << std::setw(2)
-	//		<< p.first << ' ' << std::string(p.second / 200, '*') << '\n';
-	//}
-
-
-	/*for (int n = 0; n < 10; ++n) {
-		std::cout << "\n" << nextGen(5);
-	}*/
 
 	//int* hint = new int;
 	//*hint = 6;
 	//std::cout << "\n" << *hint;
-	system("pause");
+	//system("pause");
 }
+
+
+//
+// function definitions 
+//
+
+void InitialDistr::print_x_1_sampleArea(void)
+{
+	std::cout << "\n begin: " << x_1_sampleArea[0] << "\n end: " << x_1_sampleArea[1];
+}
+
+void InitialDistr::generate_x_val(void)
+{
+	x_1 = new float[num_x_1];
+	std::uniform_real_distribution<float> d_x_i(x_1_sampleArea[0], x_1_sampleArea[1]);
+	std::uniform_real_distribution<float> d_accept(0, maxPhi);
+	for (int i = 0; i < num_x_1;) {
+		float x_1_i = d_x_i(gen);
+		float accept_theshold = d_accept(gen);
+		if (Phi(x_1_i) > accept_theshold) {
+			x_1[i] = x_1_i;
+			++i;
+		}
+		
+	}
+	//printArray(x_1, num_x_1);
+	length_x_1 = num_x_1;
+}
+
+float* InitialDistr::get_x_1(void) {
+	return x_1;
+}
+
+void InitialDistr::save_x_1(string  folder, string  name) {
+	ofstream x_1_savefile;
+	x_1_savefile.open(folder + name + ".txt");
+	for (int i = 0; i<length_x_1; ++i){
+		x_1_savefile << x_1[i] << endl;
+	}
+	x_1_savefile.close();
+}
+
 // Programm ausführen: STRG+F5 oder "Debuggen" > Menü "Ohne Debuggen starten"
 // Programm debuggen: F5 oder "Debuggen" > Menü "Debuggen starten"
 
