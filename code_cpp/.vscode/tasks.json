@@ -8,7 +8,7 @@
             "type": "shell",
             "command": "g++",
             "args": [
-                "-g", "BachelorThesis.cpp"
+                "-g", "BachelorThesis.cpp", "InitialDistr.cpp", "Evolution.cpp"
             ],
             "group": {
                 "kind": "build",
