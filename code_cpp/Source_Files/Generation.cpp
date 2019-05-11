@@ -20,6 +20,14 @@ Generation::Generation(stack<double>* p_x_n, int p_generationNum){
 Generation::~Generation(){
     delete[] x_n;
 }
+        
+void Generation::set_savePosition(string p_savePosition){
+    savePosition = p_savePosition;
+}
+
+void Generation::set_plotPosition(string p_plotPosition){
+    plotPosition = p_plotPosition;
+}
 
 double* Generation::get_x_n(void){
     return x_n;
@@ -27,8 +35,14 @@ double* Generation::get_x_n(void){
 
 
 int Generation::get_length_x_n(void){
-    // cout << "Generation get_length_x_n" << endl;
-    // cout << &length_x_n << endl;
-    // cout << *&length_x_n << endl;
     return length_x_n;
+}
+
+
+string Generation::get_savePosition(void){
+    return savePosition;
+}
+
+string Generation::get_plotPosition(void){
+    return plotPosition;
 }

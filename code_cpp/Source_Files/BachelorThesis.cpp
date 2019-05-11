@@ -27,15 +27,18 @@ using namespace std;
 std::random_device rd{};
 std::mt19937 gen{ rd() };
 
-const double E = 0.5;
+const double E = 2;
 const double m = 1;
 const double w = 1;
 const double b = 0;
 
-const double imgTime = 20;
-const int numImgTimeSlices = 50;
+const double imgTime = 1.5;
+const int numImgTimeSlices = 60;
 const double x_0_sampleArea[2] = {-10, 10};
 const int num_x_0 = 4000;
+
+const double plotArea[2] = {-10, 10};
+const int histnum = 60;
 
 const double PI = 3.141592653589793238463;
 //const double H_BAR = 
@@ -52,21 +55,9 @@ double givenPhi(double x)
 }
 
 
-void runPyScr_plot_x_0(string path, string dataname, float left, float right, int histnum)
-{
-	string filename = "../code_python/plot_x_0.py";
-	string command = "python ";
-	string args = " " + path + " " + dataname + " " + to_string(left) + " " + to_string(right) + " "+ to_string(histnum);
-
-	command += filename += args;
-	cout << endl << command << endl;
-	system(command.c_str());
-}
-
-
 double givenPotential(double x)
 {
-	return 0.5* m* pow(w, 2)* pow(x, 2) + b * pow(x, 4);
+	return 0.5* m* pow(w, 2)* pow(x-5, 2) + b * pow(x, 4);
 }
 
 double givenW(double x_n, double E, double evolution_step)
@@ -86,6 +77,16 @@ stack<double>* givenP(double x_n, double evolution_step, int toGenerateNum)
 }
 
 
+void runPyScr_plot_x_0(string path, string dataname, float left, float right, int histnum)
+{
+	string filename = "../code_python/plot_x_0.py";
+	string command = "python ";
+	string args = " " + path + " " + dataname + " " + to_string(left) + " " + to_string(right) + " "+ to_string(histnum);
+
+	command += filename += args;
+	cout << endl << command << endl;
+	system(command.c_str());
+}
 
 
 
@@ -107,8 +108,13 @@ int main()
 	// for(int i = numImgTimeSlices; i >= 0; --i){
 	// 	generationToSave.push(i);
 	// }
+	//generationToSave.push(1000);
+	generationToSave.push(60);
+	generationToSave.push(50);
 	generationToSave.push(40);
-	generationToSave.push(21);
+	generationToSave.push(30);
+	generationToSave.push(20);
+	generationToSave.push(10);
 	generationToSave.push(0);
 	
 	// cout << "generationToSave.top() = " << generationToSave.top() << endl;
@@ -132,6 +138,8 @@ int main()
 	(*evolutionMemory).print_savedGenerations();
 
 	(*evolutionMemory).save_allGenerations("../data");
+
+	(*evolutionMemory).plot_savedGenerations("../code_python/plot_x_0.py", "../data", plotArea[0], plotArea[1], histnum);
 
 	//!!!!!! x_1 will be deformed by inst_evolution !!!! ?
 	// cout << "vor save_x_N" << endl;

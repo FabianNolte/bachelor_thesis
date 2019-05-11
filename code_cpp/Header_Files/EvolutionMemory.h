@@ -47,7 +47,13 @@ class EvolutionMemory{
 		// save_allGeneration - saves the x_n values of all generations into .txt files
 		// @param string p_path - path to save to
 
-		//void plot_savedGenerations(string p_path)
+		void plot_savedGenerations(string loc_pythonScript, string path, double left_border, double right_border, int histnum);
+		// plot_savedGenerations - creats histograms of all saved generations using a python script
+		// @param loc_pythonScript - position of the python script to use
+		// @param string path - path to save to
+		// @param double left_border - left border of the visalization
+		// @param double right_border - right border of the visalization
+		// @param int histnum - number of bins in the histogram
 };
 
 

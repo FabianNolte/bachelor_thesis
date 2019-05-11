@@ -45,7 +45,8 @@ void EvolutionMemory::print_savedGenerations(void){
 
 void EvolutionMemory::save_generation(int p_generationNum, string p_path, string p_dataname){
 	ofstream x_n_savefile;
-	x_n_savefile.open(p_path + "/" + p_dataname + ".txt");
+    string filePosition = p_path + "/" + p_dataname + ".txt";
+	x_n_savefile.open(filePosition);
     double* x_n = (*EvolutionMemory::get_generation(p_generationNum)).get_x_n();
     int length_x_n = (*EvolutionMemory::get_generation(p_generationNum)).get_length_x_n();
     
@@ -56,14 +57,16 @@ void EvolutionMemory::save_generation(int p_generationNum, string p_path, string
 	for (int i = 0; i<length_x_n; ++i){
 		x_n_savefile << x_n[i] << endl;
 	}
-	cout << p_path + "/" + p_dataname + ".txt" << endl;
+    cout << "generation " << p_generationNum << " saved to " << filePosition << endl;
 	x_n_savefile.close();
+    (*EvolutionMemory::get_generation(p_generationNum)).set_savePosition(filePosition);
 }
 
 void EvolutionMemory::save_allGenerations(string p_path){
     for(auto i = generations.begin(); i != generations.end(); i++){
         ofstream x_n_savefile;
-        x_n_savefile.open(p_path + "/gen" + to_string(i->first) + ".txt");
+        string filePosition = p_path + "/gen" + to_string(i->first) + ".txt";
+        x_n_savefile.open(filePosition);
         double* x_n = (*(i->second)).get_x_n();
         int length_x_n = (*(i->second)).get_length_x_n();
 
@@ -74,9 +77,22 @@ void EvolutionMemory::save_allGenerations(string p_path){
         for (int i = 0; i<length_x_n; ++i){
             x_n_savefile << x_n[i] << endl;
         }
-        cout << p_path + "/gen" + to_string(i->first) + ".txt" << endl;
+        cout << "generation " << i->first << " saved to " << filePosition << endl;
         x_n_savefile.close();
+        (*(i->second)).set_savePosition(filePosition);
     }
-    
 }
-		
+
+void EvolutionMemory::plot_savedGenerations(string loc_pythonScript, string path, double left_border, double right_border, int histnum){
+    for(auto i = generations.begin(); i != generations.end(); i++){
+        string dataname = "gen" + to_string(i->first);
+        string command = "python ";
+        string args = " " + path + " " + dataname + " " + to_string(left_border) + " " + to_string(right_border) + " "+ to_string(histnum);
+    
+        command += loc_pythonScript + args;
+        system(command.c_str());
+        cout << "generation " << i->first << " ploted to " << path+"/"+dataname+".pdf" << endl;
+        (*(i->second)).set_savePosition(path+"/"+dataname);
+    }
+}
+	
