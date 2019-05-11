@@ -22,6 +22,9 @@ class EvolutionMemory{
 		// @param EvolutionSetting* p_setting - settings specifing how to carry out the evolution
 		// @param Generation* p_generation_0 - starting values
 
+		~EvolutionMemory();
+		// ~EvolutionMemory - destructor, deletes all generations
+
 		void add_generation(Generation* p_generation);
 		// add_generation - adds p_generation to generations
 		// @param Generation* p_generation - generation to add
@@ -43,6 +46,8 @@ class EvolutionMemory{
 		void save_allGenerations(string p_path);
 		// save_allGeneration - saves the x_n values of all generations into .txt files
 		// @param string p_path - path to save to
+
+		//void plot_savedGenerations(string p_path)
 };
 
 

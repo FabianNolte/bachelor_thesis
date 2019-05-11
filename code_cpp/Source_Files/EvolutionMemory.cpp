@@ -27,6 +27,11 @@ Generation* EvolutionMemory::get_generation(int p_generationNum){
     }
 }
 
+EvolutionMemory::~EvolutionMemory(){
+    for(auto i = generations.begin(); i != generations.end(); i++){
+        delete i->second;   
+    }
+}
 
 void EvolutionMemory::print_savedGenerations(void){
     cout << endl << endl;

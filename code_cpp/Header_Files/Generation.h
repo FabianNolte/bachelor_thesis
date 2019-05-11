@@ -20,6 +20,9 @@ class Generation{
         // @param stack<double>* p_x_n - stackpointer for x_n values
         // @param int p_generationNum - number of the generation 
 
+        ~Generation(void);
+        // ~Generation - destructor, deletes x_n
+
         double* get_x_n(void);
         // get_x_n - getter function for x_n
         // @return - pointer on array with values of x_n

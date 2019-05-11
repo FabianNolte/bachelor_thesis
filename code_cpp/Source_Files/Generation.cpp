@@ -4,8 +4,6 @@ using namespace std;
 
 Generation::Generation(){}
 
-// TODO destructor
-
 Generation::Generation(stack<double>* p_x_n, int p_generationNum){
     length_x_n = (*p_x_n).size();
     // cout << "Generation constr" << endl;
@@ -17,6 +15,10 @@ Generation::Generation(stack<double>* p_x_n, int p_generationNum){
         (*p_x_n).pop();
     }
     generationNum = p_generationNum;
+}
+
+Generation::~Generation(){
+    delete[] x_n;
 }
 
 double* Generation::get_x_n(void){
