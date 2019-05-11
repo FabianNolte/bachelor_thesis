@@ -8,7 +8,12 @@
             "type": "shell",
             "command": "g++",
             "args": [
-                "-g", "BachelorThesis.cpp", "InitialDistr.cpp", "Evolution.cpp"
+                "-g", "Source_Files\\BachelorThesis.cpp", 
+                "Source_Files\\InitialDistr.cpp", 
+                "Source_Files\\Evolution.cpp", 
+                "Source_Files\\EvolutionSetting.cpp", 
+                "Source_Files\\EvolutionMemory.cpp", 
+                "Source_Files\\Generation.cpp"
             ],
             "group": {
                 "kind": "build",

@@ -16,8 +16,11 @@
 #include <cmath>
 #include <string>
 #include <stack>
-#include "InitialDistr.h"
-#include "Evolution.h"
+#include "../Header_Files/InitialDistr.h"
+#include "../Header_Files/Evolution.h"
+#include "../Header_Files/EvolutionSetting.h"
+#include "../Header_Files/EvolutionMemory.h"
+#include "../Header_Files/Generation.h"
 
 using namespace std;
 
@@ -31,8 +34,8 @@ const double b = 0;
 
 const double imgTime = 20;
 const int numImgTimeSlices = 50;
-const double x_1_sampleArea[2] = {-10, 10};
-const int num_x_1 = 4000;
+const double x_0_sampleArea[2] = {-10, 10};
+const int num_x_0 = 4000;
 
 const double PI = 3.141592653589793238463;
 //const double H_BAR = 
@@ -44,14 +47,14 @@ const double max_givenPhi = pow(m * w / PI, 0.25);
 
 double givenPhi(double x)
 {
-	return max_givenPhi;
-	//return pow(m * w / PI, 0.25)* exp(-0.5 * m * w * pow(x, 2));
+	//return max_givenPhi;
+	return pow(m * w / PI, 0.25)* exp(-0.5 * m * w * pow(x, 2));
 }
 
 
-void runPyScr_plot_x_1(string path, string dataname, float left, float right, int histnum)
+void runPyScr_plot_x_0(string path, string dataname, float left, float right, int histnum)
 {
-	string filename = "../code_python/plot_x_1.py";
+	string filename = "../code_python/plot_x_0.py";
 	string command = "python ";
 	string args = " " + path + " " + dataname + " " + to_string(left) + " " + to_string(right) + " "+ to_string(histnum);
 
@@ -93,25 +96,52 @@ int main()
 
 	InitialDistr inst_initialDistr(gen);
 	// inst_initialDistr.print_x_1_sampleArea();
-	inst_initialDistr.generate_x_val(num_x_1, x_1_sampleArea, givenPhi, max_givenPhi);
-	double* x_1 = inst_initialDistr.get_x_1();
-	int length_x_1 = inst_initialDistr.get_length_x_1();
-	//printArray(x_1, num_x_1);
-	inst_initialDistr.save_x_1("../data/", "x_1");
-	runPyScr_plot_x_1("../data/", "x_1", x_1_sampleArea[0], x_1_sampleArea[1], 60);
+	inst_initialDistr.generate_x_val(num_x_0, x_0_sampleArea, givenPhi, max_givenPhi);
+	stack<double>* x_0 = inst_initialDistr.get_x_0();
+	int length_x_0 = inst_initialDistr.get_length_x_0();
+	//printArray(x_0, num_x_0);
+	// inst_initialDistr.save_x_0("../data/", "x_0");
+	// runPyScr_plot_x_0("../data/", "x_0", x_0_sampleArea[0], x_0_sampleArea[1], 60);
+
+	stack<int> generationToSave;
+	// for(int i = numImgTimeSlices; i >= 0; --i){
+	// 	generationToSave.push(i);
+	// }
+	generationToSave.push(40);
+	generationToSave.push(21);
+	generationToSave.push(0);
+	
+	// cout << "generationToSave.top() = " << generationToSave.top() << endl;
+
+	Generation* generation_0 = new Generation(x_0, 0);
+    // cout << "main" << endl;
+    // cout << &((*generation_0).length_x_n) << endl;
+    // cout << *&((*generation_0).length_x_n) << endl;
+	EvolutionSetting* evolutionSetting = new EvolutionSetting(numImgTimeSlices, EPSILON, E, givenW, givenP, &generationToSave);
+	EvolutionMemory* evolutionMemory = new EvolutionMemory(evolutionSetting, generation_0);
+	(*evolutionMemory).print_savedGenerations();
+    // cout << "main2 0" << endl;
+    // cout << &(((*(*evolutionMemory).get_generation(0))).length_x_n) << endl;
+    // cout << *&(((*(*evolutionMemory).get_generation(0))).length_x_n) << endl;
+    // cout << "main2 40" << endl;
+    // cout << &(((*(*evolutionMemory).get_generation(40))).length_x_n) << endl;
+    // cout << *&(((*(*evolutionMemory).get_generation(40))).length_x_n) << endl;
+	Evolution evolution(evolutionMemory, gen);
+	evolution.run();
+
+	(*evolutionMemory).print_savedGenerations();
+
+	(*evolutionMemory).save_allGenerations("../data");
 
 	//!!!!!! x_1 will be deformed by inst_evolution !!!! ?
-	Evolution inst_evolution(x_1, length_x_1, gen);
-	inst_evolution.evolution_caller(numImgTimeSlices, EPSILON, E, givenW, givenP);
-	cout << "vor save_x_N" << endl;
-	inst_evolution.save_x_N("../data/", "x_N");
-	runPyScr_plot_x_1("../data/", "x_N", x_1_sampleArea[0], x_1_sampleArea[1], 60);
+	// cout << "vor save_x_N" << endl;
+	// inst_evolution.save_x_N("../data/", "x_N");
+	//runPyScr_plot_x_0("../data/", "x_N", x_0_sampleArea[0], x_0_sampleArea[1], 60);
+
+	//(*evolutionSetting).printSetting();
 }
 
 
-//
-// function definitions 
-//
 
 
 
