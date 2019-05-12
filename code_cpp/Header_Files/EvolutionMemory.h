@@ -8,18 +8,15 @@ using namespace std;
 
 class EvolutionMemory{
 	private: 
+			// TODO maybe Generation insted of Generation* ? could be faster
         	map<int, Generation*> generations;
-			map<int, string> saveFiles; 
 
 	public:
-	        EvolutionSetting* setting;
-
 		EvolutionMemory();
 		// EvolutionSetting - consturctor
 
-		EvolutionMemory(EvolutionSetting* p_setting, Generation* p_generation_0);
+		EvolutionMemory(Generation* p_generation_0);
 		// EvolutionSetting - consturctor
-		// @param EvolutionSetting* p_setting - settings specifing how to carry out the evolution
 		// @param Generation* p_generation_0 - starting values
 
 		~EvolutionMemory();
@@ -55,14 +52,3 @@ class EvolutionMemory{
 		// @param double right_border - right border of the visalization
 		// @param int histnum - number of bins in the histogram
 };
-
-
-
-
-
-
-
-
-
-
-

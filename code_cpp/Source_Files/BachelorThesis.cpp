@@ -16,23 +16,22 @@
 #include <cmath>
 #include <string>
 #include <stack>
+#include <vector>
 #include "../Header_Files/InitialDistr.h"
 #include "../Header_Files/Evolution.h"
+#include "../Header_Files/EvolutionFunction.h"
 #include "../Header_Files/EvolutionSetting.h"
 #include "../Header_Files/EvolutionMemory.h"
 #include "../Header_Files/Generation.h"
 
 using namespace std;
 
-std::random_device rd{};
-std::mt19937 gen{ rd() };
-
 const double E = 2;
 const double m = 1;
 const double w = 1;
 const double b = 0;
 
-const double imgTime = 1.5;
+const double imgTime = 6;
 const int numImgTimeSlices = 60;
 const double x_0_sampleArea[2] = {-10, 10};
 const int num_x_0 = 4000;
@@ -55,26 +54,7 @@ double givenPhi(double x)
 }
 
 
-double givenPotential(double x)
-{
-	return 0.5* m* pow(w, 2)* pow(x-5, 2) + b * pow(x, 4);
-}
 
-double givenW(double x_n, double E, double evolution_step)
-{
-	return exp(-evolution_step * (givenPotential(x_n) - E));
-}
-
-stack<double>* givenP(double x_n, double evolution_step, int toGenerateNum)
-{
-	double sigma = pow(evolution_step/m, 0.5);
-	stack<double>* x_nPlus1 = new stack<double>;
-	std::normal_distribution<double> gen_x_nPlus1{ x_n,sigma };
-	for(int i = 0; i < toGenerateNum; ++i){
-		(*x_nPlus1).push(gen_x_nPlus1(gen));
-	}
-	return x_nPlus1;
-}
 
 
 void runPyScr_plot_x_0(string path, string dataname, float left, float right, int histnum)
@@ -95,58 +75,42 @@ int main()
 {
 	std::cout.precision(50);
 
-	InitialDistr inst_initialDistr(gen);
-	// inst_initialDistr.print_x_1_sampleArea();
+	InitialDistr inst_initialDistr;
 	inst_initialDistr.generate_x_val(num_x_0, x_0_sampleArea, givenPhi, max_givenPhi);
 	stack<double>* x_0 = inst_initialDistr.get_x_0();
 	int length_x_0 = inst_initialDistr.get_length_x_0();
-	//printArray(x_0, num_x_0);
-	// inst_initialDistr.save_x_0("../data/", "x_0");
-	// runPyScr_plot_x_0("../data/", "x_0", x_0_sampleArea[0], x_0_sampleArea[1], 60);
-
-	stack<int> generationToSave;
-	// for(int i = numImgTimeSlices; i >= 0; --i){
-	// 	generationToSave.push(i);
-	// }
-	//generationToSave.push(1000);
-	generationToSave.push(60);
-	generationToSave.push(50);
-	generationToSave.push(40);
-	generationToSave.push(30);
-	generationToSave.push(20);
-	generationToSave.push(10);
-	generationToSave.push(0);
-	
-	// cout << "generationToSave.top() = " << generationToSave.top() << endl;
-
 	Generation* generation_0 = new Generation(x_0, 0);
-    // cout << "main" << endl;
-    // cout << &((*generation_0).length_x_n) << endl;
-    // cout << *&((*generation_0).length_x_n) << endl;
-	EvolutionSetting* evolutionSetting = new EvolutionSetting(numImgTimeSlices, EPSILON, E, givenW, givenP, &generationToSave);
-	EvolutionMemory* evolutionMemory = new EvolutionMemory(evolutionSetting, generation_0);
-	(*evolutionMemory).print_savedGenerations();
-    // cout << "main2 0" << endl;
-    // cout << &(((*(*evolutionMemory).get_generation(0))).length_x_n) << endl;
-    // cout << *&(((*(*evolutionMemory).get_generation(0))).length_x_n) << endl;
-    // cout << "main2 40" << endl;
-    // cout << &(((*(*evolutionMemory).get_generation(40))).length_x_n) << endl;
-    // cout << *&(((*(*evolutionMemory).get_generation(40))).length_x_n) << endl;
-	Evolution evolution(evolutionMemory, gen);
-	evolution.run();
 
-	(*evolutionMemory).print_savedGenerations();
 
-	(*evolutionMemory).save_allGenerations("../data");
+	vector<int> generationToCalc = {0, 10, 20, 30, 40, 50, 60};
+	vector<int> generationToEOpt = {0, 20, 10, 30, 40, 50, 60};
+	
 
-	(*evolutionMemory).plot_savedGenerations("../code_python/plot_x_0.py", "../data", plotArea[0], plotArea[1], histnum);
+	//
+	//	PrimEvolution
+	//
+	PrimEvolutionSetting primEvolutionSetting(E, m, w, b, EPSILON);
+	EvolutionMemory evolutionMemory(generation_0);
+	Prim_W prim_W(primEvolutionSetting);
+	Prim_P prim_P(primEvolutionSetting);
+	EvolutionExecuter <Prim_W, Prim_P> primEvolutionExecuter(evolutionMemory, prim_W, prim_P, generationToCalc);
+	primEvolutionExecuter.run();
 
-	//!!!!!! x_1 will be deformed by inst_evolution !!!! ?
-	// cout << "vor save_x_N" << endl;
-	// inst_evolution.save_x_N("../data/", "x_N");
-	//runPyScr_plot_x_0("../data/", "x_N", x_0_sampleArea[0], x_0_sampleArea[1], 60);
+	//	
+	//	PrimEvolutionWithEOpt
+	//
+	// PrimEvolutionSettingWithEOpt* primEvolutionSettingWithEOpt = new PrimEvolutionSetting(numImgTimeSlices, EPSILON, E, givenW, givenP, generationToSave), generationToEOpt;
+	// EvolutionMemory* evolutionMemory = new EvolutionMemory(generation_0);
+	// PrimEvolutionWithEOpt primEvolutionWithEOpt(evolutionMemory, primEvolutionSettingWithEOpt, gen);
+	// primEvolution.run();
 
-	//(*evolutionSetting).printSetting();
+
+	evolutionMemory.print_savedGenerations();
+
+	evolutionMemory.save_allGenerations("../data");
+
+	evolutionMemory.plot_savedGenerations("../code_python/plot_x_0.py", "../data", plotArea[0], plotArea[1], histnum);
+
 }
 
 

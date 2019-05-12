@@ -8,9 +8,8 @@
 #include "../Header_Files/InitialDistr.h"
 
 
-InitialDistr::InitialDistr(std::mt19937 p_gen){
-	gen = p_gen;
-}
+// InitialDistr::InitialDistr(){
+// }
 
 
 // void InitialDistr::print_x_0_sampleArea(void)
@@ -20,6 +19,9 @@ InitialDistr::InitialDistr(std::mt19937 p_gen){
 
 void InitialDistr::generate_x_val(int p_length_x_0, const double* p_sampleArea, double (*p_Phi)(double), double p_maxPhi)
 {
+	std::random_device rd{};
+	std::mt19937 gen{ rd() };
+
     length_x_0 = p_length_x_0;
     sampleArea = p_sampleArea;
     Phi = p_Phi;

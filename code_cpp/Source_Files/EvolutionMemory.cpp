@@ -4,11 +4,14 @@
 #include "../Header_Files/EvolutionMemory.h"
 using namespace std;
 
+//
+//  EvolutionMemory
+//
+
 // TODO give values as reference
 // TODO destructor
 
-EvolutionMemory::EvolutionMemory(EvolutionSetting* p_setting, Generation* p_generation_0){
-    setting = p_setting;
+EvolutionMemory::EvolutionMemory(Generation* p_generation_0){
     generations.insert(pair<int, Generation*>(0, p_generation_0));
 }
 
@@ -41,7 +44,6 @@ void EvolutionMemory::print_savedGenerations(void){
     }
     cout << endl << endl;
 }
-		// print_savedGenerations - prints all currently saved generations
 
 void EvolutionMemory::save_generation(int p_generationNum, string p_path, string p_dataname){
 	ofstream x_n_savefile;
@@ -49,10 +51,6 @@ void EvolutionMemory::save_generation(int p_generationNum, string p_path, string
 	x_n_savefile.open(filePosition);
     double* x_n = (*EvolutionMemory::get_generation(p_generationNum)).get_x_n();
     int length_x_n = (*EvolutionMemory::get_generation(p_generationNum)).get_length_x_n();
-    
-    // cout << "EvolutionMemory::save_generation" << endl;
-    // cout << &length_x_n << endl;
-    // cout << *&length_x_n << endl;
 
 	for (int i = 0; i<length_x_n; ++i){
 		x_n_savefile << x_n[i] << endl;
@@ -69,10 +67,6 @@ void EvolutionMemory::save_allGenerations(string p_path){
         x_n_savefile.open(filePosition);
         double* x_n = (*(i->second)).get_x_n();
         int length_x_n = (*(i->second)).get_length_x_n();
-
-        // cout << "EvolutionMemory::save_allGenerations" << endl;
-        // cout << &length_x_n << endl;
-        // cout << *&length_x_n << endl;
 
         for (int i = 0; i<length_x_n; ++i){
             x_n_savefile << x_n[i] << endl;

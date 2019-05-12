@@ -1,39 +1,78 @@
 #include <iostream>
 #include <string>
+#include <vector>  
+#include <algorithm>
 #include "../Header_Files/EvolutionSetting.h"
 using namespace std;
 
-EvolutionSetting::EvolutionSetting(int p_evolution_stepNum, double p_evolution_stepSize, double p_E, double (*p_W_x_n)(double, double, double), stack<double>* (*p_P_x_n_to_x_nPlus1)(double, double, int), stack<int>* p_generationToSave){
-        evolution_stepNum = p_evolution_stepNum;
-        evolution_stepSize = p_evolution_stepSize;
+
+//
+//      PrimEvolutionSetting
+//
+
+PrimEvolutionSetting::PrimEvolutionSetting(double p_E, double p_m, double p_w, double p_b, double p_evolution_stepSize){
         E = p_E;
-        W_x_n = p_W_x_n; 
-        P_x_n_to_x_nPlus1 = p_P_x_n_to_x_nPlus1;
-        generationToSave = p_generationToSave;
+        m = p_m;
+        w = p_w;
+        b = p_b;
+        evolution_stepSize = p_evolution_stepSize;
 }
 
-EvolutionSetting::EvolutionSetting(){}
-
-void EvolutionSetting::printSetting(){
-        int size = (*generationToSave).size();
-        int array_generationToSave[size];
-        for(int i = 0; i < size; ++i){
-                array_generationToSave[i] = (*generationToSave).top();
-                (*generationToSave).pop();
-        }
-        for(int i = size-1; i >= 0; --i){
-                (*generationToSave).push(array_generationToSave[i]);
-        }
-
+void PrimEvolutionSetting::printSetting(){
         cout << endl << endl;
         cout << "-------Setting-------" << endl;
-        cout << "evolution_stepNum = " << evolution_stepNum << endl;
         cout << "evolution_stepSize = " << evolution_stepSize << endl;
         cout << "E = " << E << endl;
-        cout << "generationToSave: " ;
-        for (int i = 0; i < size; ++i){
-                cout << array_generationToSave[i] << " , ";
-        }
+        // cout << "generationToCalc: " ;
+        // for (int& genNumToCalc : *generationToCalc){
+        //         cout << genNumToCalc << " , ";
+        // }
         cout << endl << endl; 
 
 }
+
+double& PrimEvolutionSetting::get_E(void){
+        return E;
+}
+
+double& PrimEvolutionSetting::get_m(void){
+        return m;
+}
+
+double& PrimEvolutionSetting::get_w(void){
+        return w;
+}
+
+double& PrimEvolutionSetting::get_b(void){
+        return b;
+}
+
+double& PrimEvolutionSetting::get_evolution_stepSize(void){
+        return evolution_stepSize;
+}
+
+// //
+// //      PrimEvolutionSettingWithEOpt
+// //
+
+// PrimEvolutionSettingWithEOpt::PrimEvolutionSettingWithEOpt(int p_evolution_stepNum, double p_evolution_stepSize, double p_E, vector<int>* p_generationToSave, vector<int>* p_generationToOptE) : PrimEvolutionSetting(p_evolution_stepNum, p_evolution_stepSize, p_E, p_generationToSave){
+//         generationToOptE = p_generationToOptE;
+// }
+
+// void PrimEvolutionSettingWithEOpt::printSetting(){
+//         cout << endl << endl;
+//         cout << "-------Setting-------" << endl;
+//         cout << "evolution_stepNum = " << evolution_stepNum << endl;
+//         cout << "evolution_stepSize = " << evolution_stepSize << endl;
+//         cout << "E = " << E << endl;
+//         cout << "generationToSave: " ;
+//         for (int& genNumToSave : *generationToSave){
+//                 cout << genNumToSave << " , ";
+//         }
+//         cout << endl;
+//         cout << "generationToOptE: ";
+//         for (int& genNumToOptE : *generationToOptE){
+//                 cout << genNumToOptE << " , ";
+//         }
+//         cout << endl << endl; 
+// }

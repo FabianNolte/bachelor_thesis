@@ -12,12 +12,10 @@ class InitialDistr
         const double* sampleArea;
         double (*Phi)(double); 
 		double maxPhi;
-		std::mt19937 gen;
 
 	public:
-		InitialDistr(std::mt19937 p_gen);
+		// InitialDistr();
 		// InitialDistr - constructor
-		// @param std::mt19937 p_gen - random number generator
 
 		void generate_x_val(int p_length_x_0, const double* p_sampleArea, double (*p_Phi)(double), double p_maxPhi);
 		// generate_x_val - uses Neumann rejection to generate the x_0 distribution according to Phi

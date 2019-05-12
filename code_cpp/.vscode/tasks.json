@@ -13,7 +13,8 @@
                 "Source_Files\\Evolution.cpp", 
                 "Source_Files\\EvolutionSetting.cpp", 
                 "Source_Files\\EvolutionMemory.cpp", 
-                "Source_Files\\Generation.cpp"
+                "Source_Files\\Generation.cpp", 
+                "Source_Files\\EvolutionFunction.cpp"
             ],
             "group": {
                 "kind": "build",
