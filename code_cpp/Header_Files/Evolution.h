@@ -5,6 +5,7 @@
 #include "EvolutionSetting.h"
 #include "EvolutionFunction.h"
 #include "Generation.h"
+#include "ExecuterSetting.h"
 using namespace std;
 
 template<class temp_W, class temp_P>
@@ -13,7 +14,7 @@ class EvolutionExecuter
 	private:
 		EvolutionMemory* evolutionMemory;
 
-		vector<int>* generationToCalc;
+		ExecuterSetting* ex_setting;
 
 		temp_W* W_x_n;
 		temp_P* P_x_n_to_x_nPlus1;
@@ -36,12 +37,12 @@ class EvolutionExecuter
 
 	public:
 		// TODO without Prim
-		EvolutionExecuter(EvolutionMemory& p_evolutionMemory, temp_W& p_W_x_n, temp_P& P_x_n_to_x_nPlus1, vector<int>& p_generationToCalc);
+		EvolutionExecuter(EvolutionMemory& p_evolutionMemory, temp_W& p_W_x_n, temp_P& P_x_n_to_x_nPlus1, ExecuterSetting& p_ex_setting);
 		// EvolutionExecuter - consturctor
 		// @param EvolutionMemory* p_evolutionMemory - storage for the evolution
 		// @param temp_W& p_W_x_n - object which calculates the weight
 		// @param temp_P& P_x_n_to_x_nPlus1 - object which calculates P
-		// @param vector<int>& p_generationToCalc - containing W and P to for the evolution
+		// @param ExecuterSetting& p_ex_setting- TODO
 		
 		void run(void);
 		// run - rises the evolution of x_0
@@ -52,25 +53,6 @@ class EvolutionExecuter
 
 
 
-// class PrimEvolutionWithEOpt : public EvolutionExecuter
-// {
-// 	private:
-// 		PrimEvolutionSettingWithEOpt* setting;
-
-// 	private:
-// 		void optE(void);
-// 		// optE - optimizes E to achive constant generation size
-
-// 	public:
-// 		PrimEvolutionWithEOpt(EvolutionMemory* p_evolutionMemory, PrimEvolutionSettingWithEOpt* p_setting, EvolutionFunction* p_evoltuionFunction, std::mt19937 p_gen);
-// 		// PrimEvolutionWithEOpt - consturctor
-// 		// @param EvolutionMemory* p_evolutionMemory - storage for the evolution
-// 		// @param PrimEvolutionSettingWithEOpt* p_setting - settings specifing how to carry out the evolution
-//     	// @param EvolutionFunction* p_evoltuionFunction - containing W and P to for the evolution
-//     	// @param std::mt19937 p_gen - random number generato
-
-// 		void run(void);
-// 		// run - rises the evolution of x_0
 
 
 
@@ -82,6 +64,7 @@ class EvolutionExecuter
 #include <cmath>
 #include <stack>
 #include <vector>
+#include <algorithm>
 
 
 //
@@ -89,11 +72,11 @@ class EvolutionExecuter
 //
 
 template<class temp_W, class temp_P>
-EvolutionExecuter<temp_W, temp_P>::EvolutionExecuter(EvolutionMemory& p_evolutionMemory, temp_W& p_W_x_n, temp_P& p_P_x_n_to_x_nPlus1, vector<int>& p_generationToCalc){
+EvolutionExecuter<temp_W, temp_P>::EvolutionExecuter(EvolutionMemory& p_evolutionMemory, temp_W& p_W_x_n, temp_P& p_P_x_n_to_x_nPlus1, ExecuterSetting& p_ex_setting){
 	evolutionMemory = &p_evolutionMemory;
 	W_x_n = &p_W_x_n;
 	P_x_n_to_x_nPlus1 = &p_P_x_n_to_x_nPlus1;
-	generationToCalc = &p_generationToCalc;
+	ex_setting = &p_ex_setting;
 	replicationNum = 0;
 }
 
@@ -101,19 +84,49 @@ EvolutionExecuter<temp_W, temp_P>::EvolutionExecuter(EvolutionMemory& p_evolutio
 
 template<class temp_W, class temp_P>
 void EvolutionExecuter<temp_W, temp_P>::run(){
+
+
 	// TODO maybe statrgeneration point calc and then use; faster
-    for(vector<int>::iterator it = generationToCalc->begin(); it != --(generationToCalc->end()); it++){
-		stack<double> stack_x_n_toSave;
+	Generation* gen_nMinus1 = evolutionMemory->get_generation(0);
+	// Generation* gen_n;
 
-		for(int i = 0; i < (evolutionMemory->get_generation(*it))->get_length_x_n(); ++i) {
-			evolution_executer((evolutionMemory->get_generation(*it))->get_x_n()[i], *it , *(it+1), stack_x_n_toSave);
-			cout << "finished with x_1_i = " << i << " at generation " << *(it+1) << endl;
+	int length_x_0 = gen_nMinus1->get_length_x_n();
+
+	// TODO delete unsaved generation !!
+	auto it_nMinus1 = ex_setting->get_generationToCalc().begin();
+    for(auto it_n = ++(ex_setting->get_generationToCalc().begin()); it_n != (ex_setting->get_generationToCalc().end()); it_n++, it_nMinus1++){
+		if(((it_nMinus1)->second).second){
+			double portionToAccept = double(length_x_0)/gen_nMinus1->get_length_x_n();
+			int numOfGenToEvolve = it_n->first - gen_nMinus1->generationNum;
+			double portionToAcceptEveryGen = pow(portionToAccept, 1.0/numOfGenToEvolve);
+			cout << "portionToAcceptEveryGen = " << portionToAcceptEveryGen << endl;
+			W_x_n->opt(portionToAcceptEveryGen, gen_nMinus1);
 		}
+ 		stack<double> stack_x_n;
 
-		Generation* x_n_toSave = new Generation(&stack_x_n_toSave, *(it+1));
-		evolutionMemory->add_generation(x_n_toSave);
+		for(int i = 0; i < gen_nMinus1->get_length_x_n(); ++i) {
+			evolution_executer(gen_nMinus1->get_x_n()[i], gen_nMinus1->generationNum , it_n->first, stack_x_n);
+		}
+		cout << "finished generation " << it_n->first << " with " << stack_x_n.size() << " points" << endl;
+
+		if((it_nMinus1->second).first){
+			evolutionMemory->add_generation(gen_nMinus1);
+		}
+		else{
+			delete gen_nMinus1;
+		}
+		gen_nMinus1 = new Generation(&stack_x_n, it_n->first);
+	}
+	if(((it_nMinus1)->second).first){
+		evolutionMemory->add_generation(gen_nMinus1);
+	}
+	else{
+		delete gen_nMinus1;
 	}
 }
+
+
+
 
 
 template<class temp_W, class temp_P>

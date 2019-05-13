@@ -3,6 +3,7 @@
 #include <random>
 #include <stack>
 #include "../Header_Files/EvolutionSetting.h"
+#include "../Header_Files/Generation.h"
 using namespace std;
 
 
@@ -31,6 +32,11 @@ class Prim_W{
         // operator() - calculates weight of p_x_n
         // @param double& p_x_n - point to calculate weight for
         // @param double - calculated weight
+
+        void opt(double& p_portionToAccept, Generation* p_generation);
+        // opt - optimizes E to achive a average weight of p_portionToAccept
+        // @param double& p_portionToAccept - average weight to achive
+        // @param Generation* p_generation - generation to calculate optimize for
 };
 
 class Prim_P{

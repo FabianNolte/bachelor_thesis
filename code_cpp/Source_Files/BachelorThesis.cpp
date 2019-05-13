@@ -23,6 +23,7 @@
 #include "../Header_Files/EvolutionSetting.h"
 #include "../Header_Files/EvolutionMemory.h"
 #include "../Header_Files/Generation.h"
+#include "../Header_Files/ExecuterSetting.h"
 
 using namespace std;
 
@@ -81,10 +82,11 @@ int main()
 	int length_x_0 = inst_initialDistr.get_length_x_0();
 	Generation* generation_0 = new Generation(x_0, 0);
 
-
-	vector<int> generationToCalc = {0, 10, 20, 30, 40, 50, 60};
-	vector<int> generationToEOpt = {0, 20, 10, 30, 40, 50, 60};
+	vector<int> generationToSave = {0, 10, 20, 30, 40, 50, 60};
+	vector<int> generationToOpt = {0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60};// 
 	
+	ExecuterSetting executerSetting(generationToSave, generationToOpt);
+	executerSetting.print();
 
 	//
 	//	PrimEvolution
@@ -93,7 +95,7 @@ int main()
 	EvolutionMemory evolutionMemory(generation_0);
 	Prim_W prim_W(primEvolutionSetting);
 	Prim_P prim_P(primEvolutionSetting);
-	EvolutionExecuter <Prim_W, Prim_P> primEvolutionExecuter(evolutionMemory, prim_W, prim_P, generationToCalc);
+	EvolutionExecuter <Prim_W, Prim_P> primEvolutionExecuter(evolutionMemory, prim_W, prim_P, executerSetting);
 	primEvolutionExecuter.run();
 
 	//	

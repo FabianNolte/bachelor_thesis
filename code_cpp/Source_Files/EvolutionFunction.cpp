@@ -1,7 +1,9 @@
 //#include <math>
+#include <iostream>
 #include <stack>
 #include <random>
 #include "../Header_Files/EvolutionFunction.h"
+#include "../Header_Files/Generation.h"
 using namespace std;
 
 // Prim_W, Prim_P create_EvolutionFunction(PrimEvolutionSetting& p_primEvolutionSetting){
@@ -24,6 +26,17 @@ double Prim_W::potential(double& p_x){
 
 double Prim_W::operator() (double& p_x_n){
     return exp(-evolution_stepSize * (potential(p_x_n) - E));
+}
+
+void Prim_W::opt(double& p_portionToAccept, Generation* p_generation){
+    double averagePotential = 0;
+    double* x_n = p_generation->get_x_n();
+    for(int i = 0; i < p_generation->get_length_x_n(); i++){
+        averagePotential += potential(x_n[i]);
+    }
+    averagePotential /= p_generation->get_length_x_n();
+    E = log(p_portionToAccept)/evolution_stepSize + averagePotential;
+    cout << "opt in gen " << p_generation->generationNum << " with E opt to " << E << endl;
 }
 
 Prim_P::Prim_P(){}
