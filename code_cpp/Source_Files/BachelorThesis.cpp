@@ -19,26 +19,27 @@
 #include <vector>
 #include "../Header_Files/InitialDistr.h"
 #include "../Header_Files/Evolution.h"
-#include "../Header_Files/EvolutionFunction.h"
+#include "../Header_Files/PrimEvolutionFunction.h"
 #include "../Header_Files/EvolutionSetting.h"
 #include "../Header_Files/EvolutionMemory.h"
 #include "../Header_Files/Generation.h"
 #include "../Header_Files/ExecuterSetting.h"
+#include "../Header_Files/GuidedEvolutionFunction.h"
 
 using namespace std;
 
 const double E = 2;
 const double m = 1;
-const double w = 1;
-const double b = 0;
+const double w = 4;
+const double b = 0.5;
 
-const double imgTime = 6;
+const double imgTime = 0.25;
 const int numImgTimeSlices = 60;
 const double x_0_sampleArea[2] = {-10, 10};
-const int num_x_0 = 4000;
+const int num_x_0 = 10000;
 
 const double plotArea[2] = {-10, 10};
-const int histnum = 60;
+const int histnum = 250;
 
 const double PI = 3.141592653589793238463;
 //const double H_BAR = 
@@ -82,8 +83,8 @@ int main()
 	int length_x_0 = inst_initialDistr.get_length_x_0();
 	Generation* generation_0 = new Generation(x_0, 0);
 
-	vector<int> generationToSave = {0, 10, 20, 30, 40, 50, 60};
-	vector<int> generationToOpt = {0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60};// 
+	vector<int> generationToSave = {0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
+	vector<int> generationToOpt = {0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100};// 
 	
 	ExecuterSetting executerSetting(generationToSave, generationToOpt);
 	executerSetting.print();
@@ -95,8 +96,12 @@ int main()
 	EvolutionMemory evolutionMemory(generation_0);
 	Prim_W prim_W(primEvolutionSetting);
 	Prim_P prim_P(primEvolutionSetting);
+	GuidedByHO0_W guided_W(primEvolutionSetting);
+	GuidedByHO0_P guided_P(primEvolutionSetting);
 	EvolutionExecuter <Prim_W, Prim_P> primEvolutionExecuter(evolutionMemory, prim_W, prim_P, executerSetting);
 	primEvolutionExecuter.run();
+	// EvolutionExecuter <GuidedByHO0_W, GuidedByHO0_P> guidedEvolutionExecuter(evolutionMemory, guided_W, guided_P, executerSetting);
+	// guidedEvolutionExecuter.run();
 
 	//	
 	//	PrimEvolutionWithEOpt

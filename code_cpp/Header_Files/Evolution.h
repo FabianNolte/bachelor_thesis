@@ -3,7 +3,7 @@
 #include <random>
 #include "EvolutionMemory.h"
 #include "EvolutionSetting.h"
-#include "EvolutionFunction.h"
+#include "PrimEvolutionFunction.h"
 #include "Generation.h"
 #include "ExecuterSetting.h"
 using namespace std;
@@ -31,9 +31,10 @@ class EvolutionExecuter
 		// @param in max_n - generation to evolve to
 		// @param stack<double>& - saving structur for elements of the last generation
 
-		int calc_replicationNumFor_x_n(double x_n);
+		int calc_replicationNumFor_x_n(double x_n, int p_n);
 		// calc_replicationNumFor_x_n - calculates according to the weight function the replication number of the current element
 		// @param double x_n - x_n to calculate the replication number for
+		// @param int p_n - number of generation 
 
 	public:
 		// TODO without Prim
@@ -139,12 +140,12 @@ void EvolutionExecuter<temp_W, temp_P>::evolution_executer(double x_n, int n, in
 
 	else{
 		//calc multipicity accorting to W
-		int replicationNumFor_x_n = calc_replicationNumFor_x_n(x_n);
+		int replicationNumFor_x_n = calc_replicationNumFor_x_n(x_n, n);
 
 		if(replicationNumFor_x_n != 0) {
 			replicationNum += replicationNumFor_x_n;
 			//calc x_nPlus1 according to P with multipicity according to W
-			stack<double>* x_nPlus1 = (*P_x_n_to_x_nPlus1)(x_n, replicationNumFor_x_n);
+			stack<double>* x_nPlus1 = (*P_x_n_to_x_nPlus1)(x_n, n, replicationNumFor_x_n);
 			//call evolution_executer for all x_nPlus1
 			for(int i=0; i < replicationNumFor_x_n; ++i){
 				evolution_executer((*x_nPlus1).top(), n+1, max_n, stack_x_n_toSave);
@@ -157,9 +158,9 @@ void EvolutionExecuter<temp_W, temp_P>::evolution_executer(double x_n, int n, in
 
 // TODO pass to function per reference ; faster
 template<class temp_W, class temp_P>
-int EvolutionExecuter<temp_W, temp_P>::calc_replicationNumFor_x_n(double x_n){
+int EvolutionExecuter<temp_W, temp_P>::calc_replicationNumFor_x_n(double x_n, int p_n){
 	int replicationNumFor_x_n;
-	double W = (*W_x_n)(x_n);
+	double W = (*W_x_n)(x_n, p_n);
 	replicationNumFor_x_n = int(W); // TODO check modulo ; faster
 	std::uniform_real_distribution<double> d_accept(0, 1);
 	if(d_accept(gen) <= W-replicationNumFor_x_n){

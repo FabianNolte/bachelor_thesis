@@ -14,7 +14,8 @@
                 "Source_Files\\EvolutionSetting.cpp", 
                 "Source_Files\\EvolutionMemory.cpp", 
                 "Source_Files\\Generation.cpp", 
-                "Source_Files\\EvolutionFunction.cpp",
+                "Source_Files\\PrimEvolutionFunction.cpp",
+                "Source_Files\\GuidedEvolutionFunction.cpp",
                 "Source_Files\\ExecuterSetting.cpp"
             ],
             "group": {

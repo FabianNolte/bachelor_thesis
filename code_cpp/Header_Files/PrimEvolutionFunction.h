@@ -28,9 +28,10 @@ class Prim_W{
         Prim_W(PrimEvolutionSetting& p_primEvolutionSetting);
         // Prim_W - constructor;
 
-        double operator() (double& p_x_n);
+        double operator() (double& p_x_n, int& p_n);
         // operator() - calculates weight of p_x_n
         // @param double& p_x_n - point to calculate weight for
+        // @param int& p_n - generation number
         // @param double - calculated weight
 
         void opt(double& p_portionToAccept, Generation* p_generation);
@@ -53,10 +54,11 @@ class Prim_P{
 
          
 
-        stack<double>* operator() (double& p_x_n, int& p_toGenerateNum);
+        stack<double>* operator() (double& p_x_n, int& p_n, int& p_toGenerateNum);
         // operator() - calculates gaussian distributed points arround p_x_n with standart derivation sigma
         // @param double& p_x_n - mean value
         // @param int& p_toGenerateNum - amount of numbers to generate
+        // @param int& p_n - generation number
         // @return stack<double>* - stack of generated random numbers
 };
 

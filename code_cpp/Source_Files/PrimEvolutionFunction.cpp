@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stack>
 #include <random>
-#include "../Header_Files/EvolutionFunction.h"
+#include "../Header_Files/PrimEvolutionFunction.h"
 #include "../Header_Files/Generation.h"
 using namespace std;
 
@@ -21,10 +21,10 @@ Prim_W::Prim_W(PrimEvolutionSetting& p_primEvolutionSetting){
 }
 
 double Prim_W::potential(double& p_x){
-    return 0.5* m* pow(w, 2)* pow(p_x-5, 2) + b * pow(p_x, 4);
+    return - 0.5* m* pow(w, 2)* pow(p_x, 2) + b * pow(p_x, 4);
 }
 
-double Prim_W::operator() (double& p_x_n){
+double Prim_W::operator() (double& p_x_n, int& p_n){
     return exp(-evolution_stepSize * (potential(p_x_n) - E));
 }
 
@@ -45,7 +45,7 @@ Prim_P::Prim_P(PrimEvolutionSetting& p_primEvolutionSetting){
     sigma = pow(p_primEvolutionSetting.get_evolution_stepSize()/p_primEvolutionSetting.get_m(), 0.5);
 }
 
-stack<double>* Prim_P::operator() (double& p_x_n, int& p_toGenerateNum){
+stack<double>* Prim_P::operator() (double& p_x_n, int& p_n, int& p_toGenerateNum){
 	stack<double>* x_nPlus1 = new stack<double>;
 	std::normal_distribution<double> gen_x_nPlus1{ p_x_n,sigma };
 	for(int i = 0; i < p_toGenerateNum; ++i){
