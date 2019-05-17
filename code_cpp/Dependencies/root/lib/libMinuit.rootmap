@@ -1,0 +1,5 @@
+Library.TFitter:                            libMinuit.dll libGraf.dll libHist.dll libMatrix.dll libMathCore.dll
+Library.TLinearFitter:                      libMinuit.dll libGraf.dll libHist.dll libMatrix.dll libMathCore.dll
+Library.TLinearMinimizer:                   libMinuit.dll libGraf.dll libHist.dll libMatrix.dll libMathCore.dll
+Library.TMinuit:                            libMinuit.dll libGraf.dll libHist.dll libMatrix.dll libMathCore.dll
+Library.TMinuitMinimizer:                   libMinuit.dll libGraf.dll libHist.dll libMatrix.dll libMathCore.dll

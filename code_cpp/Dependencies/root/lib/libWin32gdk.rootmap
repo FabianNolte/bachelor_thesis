@@ -1,0 +1,2 @@
+Library.TGWin32:                            libWin32gdk.dll
+Library.TGWin32GLManager:                   libWin32gdk.dll

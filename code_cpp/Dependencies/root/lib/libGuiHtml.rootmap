@@ -1,0 +1,2 @@
+Library.TGHtml:                             libGuiHtml.dll libGui.dll libGraf.dll libNet.dll
+Library.TGHtmlBrowser:                      libGuiHtml.dll libGui.dll libGraf.dll libNet.dll

@@ -1,0 +1,8 @@
+Library.PyROOT@@TPyException:               libPyROOT.dll
+Library.PyROOT@@TPyROOTApplication:         libPyROOT.dll
+Library.TPyDispatcher:                      libPyROOT.dll
+Library.TPyMultiGenFunction:                libPyROOT.dll
+Library.TPyMultiGradFunction:               libPyROOT.dll
+Library.TPyReturn:                          libPyROOT.dll
+Library.TPySelector:                        libPyROOT.dll
+Library.TPython:                            libPyROOT.dll

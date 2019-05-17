@@ -1,0 +1,4 @@
+Library.TGeoChecker:                        libGeomPainter.dll libGeom.dll libTree.dll libGraf3d.dll libHist.dll libGpad.dll libRIO.dll libMathCore.dll
+Library.TGeoOverlap:                        libGeomPainter.dll libGeom.dll libTree.dll libGraf3d.dll libHist.dll libGpad.dll libRIO.dll libMathCore.dll
+Library.TGeoPainter:                        libGeomPainter.dll libGeom.dll libTree.dll libGraf3d.dll libHist.dll libGpad.dll libRIO.dll libMathCore.dll
+Library.TGeoTrack:                          libGeomPainter.dll libGeom.dll libTree.dll libGraf3d.dll libHist.dll libGpad.dll libRIO.dll libMathCore.dll

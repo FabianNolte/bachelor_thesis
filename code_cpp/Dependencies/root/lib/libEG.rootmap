@@ -1,0 +1,9 @@
+Library.TAttParticle:                       libEG.dll libGraf3d.dll libGraf.dll libGpad.dll libMathCore.dll
+Library.TDatabasePDG:                       libEG.dll libGraf3d.dll libGraf.dll libGpad.dll libMathCore.dll
+Library.TDecayChannel:                      libEG.dll libGraf3d.dll libGraf.dll libGpad.dll libMathCore.dll
+Library.TGenerator:                         libEG.dll libGraf3d.dll libGraf.dll libGpad.dll libMathCore.dll
+Library.TParticle:                          libEG.dll libGraf3d.dll libGraf.dll libGpad.dll libMathCore.dll
+Library.TParticleClassPDG:                  libEG.dll libGraf3d.dll libGraf.dll libGpad.dll libMathCore.dll
+Library.TParticlePDG:                       libEG.dll libGraf3d.dll libGraf.dll libGpad.dll libMathCore.dll
+Library.TPrimary:                           libEG.dll libGraf3d.dll libGraf.dll libGpad.dll libMathCore.dll
+Library.TVirtualMCDecayer:                  libEG.dll libGraf3d.dll libGraf.dll libGpad.dll libMathCore.dll

@@ -1,0 +1,7 @@
+#ifndef ROOT_RConfigOptions
+#define ROOT_RConfigOptions
+
+#define R__CONFIGUREOPTIONS   "CMAKE_CXX_STANDARD_LIBRARIES=kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib CMAKE_C_STANDARD_LIBRARIES=kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib GSL_CBLAS_LIBRARY=C:/external/vc12/gsl/1.16/lib/Release/gslcblas.lib GSL_INCLUDE_DIR=C:/external/vc12/gsl/1.16/include GSL_LIBRARY=C:/external/vc12/gsl/1.16/lib/Release/gsl.lib LZ4_INCLUDE_DIR=C:/build/workspace/root-release-5.34/BUILDTYPE/Release/COMPILER/vc12/LABEL/win7/build/root_v5.34.38-cmake/include LZMA_INCLUDE_DIR=C:/build/workspace/root-release-5.34/BUILDTYPE/Release/COMPILER/vc12/LABEL/win7/build/root_v5.34.38-cmake/LZMA/src/LZMA/include OPENGL_gl_LIBRARY=opengl32 OPENGL_glu_LIBRARY=glu32 PYTHIA8_INCLUDE_DIR=C:/external/vc12/pythia8/include PYTHIA8_LIBRARY=C:/external/vc12/pythia8/lib/Release/libPythia8.lib PYTHON_INCLUDE_DIR=C:/external/Python27/include PYTHON_LIBRARY=C:/external/Python27/libs/python27.lib PYTHON_LIBRARY_RELEASE=C:/external/Python27/libs/python27.lib "
+#define R__CONFIGUREFEATURES  " asimage astiff builtin_afterimage builtin_ftgl builtin_freetype builtin_glew builtin_pcre builtin_zlib builtin_lzma builtin_lz4 cintex exceptions explicitlink fortran gdml genvector http mathmore minuit2 opengl pythia8 python reflex roofit shared table thread tmva unuran vdt"
+
+#endif

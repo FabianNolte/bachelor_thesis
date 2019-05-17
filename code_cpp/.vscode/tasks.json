@@ -8,20 +8,36 @@
             "type": "shell",
             "command": "g++",
             "args": [
-                "-g", "Source_Files\\BachelorThesis.cpp", 
-                "Source_Files\\InitialDistr.cpp", 
-                "Source_Files\\Evolution.cpp", 
-                "Source_Files\\EvolutionSetting.cpp", 
-                "Source_Files\\EvolutionMemory.cpp", 
-                "Source_Files\\Generation.cpp", 
-                "Source_Files\\PrimEvolutionFunction.cpp",
-                "Source_Files\\GuidedEvolutionFunction.cpp",
-                "Source_Files\\ExecuterSetting.cpp"
+                "-g", 
+              //  "-I", "Dependencies\\root\\include",
+              //  "-L", "'root", "-config", "--incdir'",
+                "Source_Files\\main.cpp", 
+              //  "Source_Files\\Analyser.cpp", 
+                "Source_Files\\StartFunction.cpp", 
+                "Source_Files\\Data\\Memory.cpp",
+                "Source_Files\\Data\\Generation.cpp",  
+                "Source_Files\\Data\\Setting.cpp", 
+                "Source_Files\\Evolution\\EvolutionExecuter.cpp",
+                "Source_Files\\Evolution\\ExecuterSetting.cpp",
+                "Source_Files\\Evolution\\P.cpp",
+                "Source_Files\\Evolution\\W.cpp"
             ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
         }
+        // },
+        // {
+        //     "label": "root",
+        //     "type": "shell",
+        //     "command": "Dependencies\\root\\bin\\thisroot.bat",
+        //     "args": [
+        //     ],
+        //     "group": {
+        //         "kind": "build",
+        //         "isDefault": true
+        //     }
+        // }
     ]
 }

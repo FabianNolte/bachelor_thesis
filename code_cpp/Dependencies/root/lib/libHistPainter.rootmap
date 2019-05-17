@@ -1,0 +1,5 @@
+Library.TGraph2DPainter:                    libHistPainter.dll libGraf.dll libHist.dll libMatrix.dll libMathCore.dll libGpad.dll
+Library.TGraphPainter:                      libHistPainter.dll libGraf.dll libHist.dll libMatrix.dll libMathCore.dll libGpad.dll
+Library.THistPainter:                       libHistPainter.dll libGraf.dll libHist.dll libMatrix.dll libMathCore.dll libGpad.dll
+Library.TPainter3dAlgorithms:               libHistPainter.dll libGraf.dll libHist.dll libMatrix.dll libMathCore.dll libGpad.dll
+Library.TPaletteAxis:                       libHistPainter.dll libGraf.dll libHist.dll libMatrix.dll libMathCore.dll libGpad.dll

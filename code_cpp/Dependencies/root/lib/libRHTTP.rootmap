@@ -1,0 +1,11 @@
+Library.TCivetweb:                          libRHTTP.dll libThread.dll libTree.dll libHist.dll libGpad.dll libGraf.dll libRIO.dll libXMLIO.dll
+Library.TFastCgi:                           libRHTTP.dll libThread.dll libTree.dll libHist.dll libGpad.dll libGraf.dll libRIO.dll libXMLIO.dll
+Library.THttpCallArg:                       libRHTTP.dll libThread.dll libTree.dll libHist.dll libGpad.dll libGraf.dll libRIO.dll libXMLIO.dll
+Library.THttpEngine:                        libRHTTP.dll libThread.dll libTree.dll libHist.dll libGpad.dll libGraf.dll libRIO.dll libXMLIO.dll
+Library.THttpServer:                        libRHTTP.dll libThread.dll libTree.dll libHist.dll libGpad.dll libGraf.dll libRIO.dll libXMLIO.dll
+Library.THttpWSEngine:                      libRHTTP.dll libThread.dll libTree.dll libHist.dll libGpad.dll libGraf.dll libRIO.dll libXMLIO.dll
+Library.TRootSniffer:                       libRHTTP.dll libThread.dll libTree.dll libHist.dll libGpad.dll libGraf.dll libRIO.dll libXMLIO.dll
+Library.TRootSnifferScanRec:                libRHTTP.dll libThread.dll libTree.dll libHist.dll libGpad.dll libGraf.dll libRIO.dll libXMLIO.dll
+Library.TRootSnifferStore:                  libRHTTP.dll libThread.dll libTree.dll libHist.dll libGpad.dll libGraf.dll libRIO.dll libXMLIO.dll
+Library.TRootSnifferStoreJson:              libRHTTP.dll libThread.dll libTree.dll libHist.dll libGpad.dll libGraf.dll libRIO.dll libXMLIO.dll
+Library.TRootSnifferStoreXml:               libRHTTP.dll libThread.dll libTree.dll libHist.dll libGpad.dll libGraf.dll libRIO.dll libXMLIO.dll

@@ -1,0 +1,12 @@
+Library.TGRecorder:                         libRecorder.dll libRIO.dll libTree.dll libGui.dll libThread.dll
+Library.TRecCmdEvent:                       libRecorder.dll libRIO.dll libTree.dll libGui.dll libThread.dll
+Library.TRecEvent:                          libRecorder.dll libRIO.dll libTree.dll libGui.dll libThread.dll
+Library.TRecExtraEvent:                     libRecorder.dll libRIO.dll libTree.dll libGui.dll libThread.dll
+Library.TRecGuiEvent:                       libRecorder.dll libRIO.dll libTree.dll libGui.dll libThread.dll
+Library.TRecWinPair:                        libRecorder.dll libRIO.dll libTree.dll libGui.dll libThread.dll
+Library.TRecorder:                          libRecorder.dll libRIO.dll libTree.dll libGui.dll libThread.dll
+Library.TRecorderInactive:                  libRecorder.dll libRIO.dll libTree.dll libGui.dll libThread.dll
+Library.TRecorderPaused:                    libRecorder.dll libRIO.dll libTree.dll libGui.dll libThread.dll
+Library.TRecorderRecording:                 libRecorder.dll libRIO.dll libTree.dll libGui.dll libThread.dll
+Library.TRecorderReplaying:                 libRecorder.dll libRIO.dll libTree.dll libGui.dll libThread.dll
+Library.TRecorderState:                     libRecorder.dll libRIO.dll libTree.dll libGui.dll libThread.dll

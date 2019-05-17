@@ -1,0 +1,3 @@
+Library.TASImage:                           libASImage.dll libGraf.dll libMathCore.dll
+Library.TASImagePlugin:                     libASImage.dll libGraf.dll libMathCore.dll
+Library.TASPluginGS:                        libASImage.dll libGraf.dll libMathCore.dll

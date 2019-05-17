@@ -36,5 +36,6 @@
         "string": "cpp",
         "stack": "cpp",
         "map": "cpp"
-    }
+    },
+    "git.ignoreLimitWarning": true
 }
