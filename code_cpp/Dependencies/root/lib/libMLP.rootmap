@@ -1,4 +1,0 @@
-Library.TMLPAnalyzer:                       libMLP.dll libHist.dll libMatrix.dll libTree.dll libGraf.dll libGpad.dll libTreePlayer.dll libMathCore.dll
-Library.TMultiLayerPerceptron:              libMLP.dll libHist.dll libMatrix.dll libTree.dll libGraf.dll libGpad.dll libTreePlayer.dll libMathCore.dll
-Library.TNeuron:                            libMLP.dll libHist.dll libMatrix.dll libTree.dll libGraf.dll libGpad.dll libTreePlayer.dll libMathCore.dll
-Library.TSynapse:                           libMLP.dll libHist.dll libMatrix.dll libTree.dll libGraf.dll libGpad.dll libTreePlayer.dll libMathCore.dll

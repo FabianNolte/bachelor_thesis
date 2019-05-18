@@ -1,6 +1,0 @@
-Library.TGeoMCGeometry:                     libVMC.dll libEG.dll libGeom.dll libMathCore.dll
-Library.TMCVerbose:                         libVMC.dll libEG.dll libGeom.dll libMathCore.dll
-Library.TVirtualMC:                         libVMC.dll libEG.dll libGeom.dll libMathCore.dll
-Library.TVirtualMCApplication:              libVMC.dll libEG.dll libGeom.dll libMathCore.dll
-Library.TVirtualMCGeometry:                 libVMC.dll libEG.dll libGeom.dll libMathCore.dll
-Library.TVirtualMCStack:                    libVMC.dll libEG.dll libGeom.dll libMathCore.dll

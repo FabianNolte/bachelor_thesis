@@ -1,4 +1,0 @@
-Library.TAuthenticate:                      libRootAuth.dll libNet.dll libRIO.dll
-Library.THostAuth:                          libRootAuth.dll libNet.dll libRIO.dll
-Library.TRootAuth:                          libRootAuth.dll libNet.dll libRIO.dll
-Library.TRootSecContext:                    libRootAuth.dll libNet.dll libRIO.dll

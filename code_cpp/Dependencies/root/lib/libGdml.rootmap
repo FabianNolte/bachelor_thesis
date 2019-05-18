@@ -1,3 +1,0 @@
-Library.TGDMLParse:                         libGdml.dll libGeom.dll libXMLIO.dll libHist.dll libRIO.dll
-Library.TGDMLRefl:                          libGdml.dll libGeom.dll libXMLIO.dll libHist.dll libRIO.dll
-Library.TGDMLWrite:                         libGdml.dll libGeom.dll libXMLIO.dll libHist.dll libRIO.dll

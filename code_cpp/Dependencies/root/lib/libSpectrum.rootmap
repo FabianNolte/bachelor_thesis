@@ -1,7 +1,0 @@
-Library.TSpectrum:                          libSpectrum.dll libHist.dll libMatrix.dll
-Library.TSpectrum2:                         libSpectrum.dll libHist.dll libMatrix.dll
-Library.TSpectrum2Fit:                      libSpectrum.dll libHist.dll libMatrix.dll
-Library.TSpectrum2Transform:                libSpectrum.dll libHist.dll libMatrix.dll
-Library.TSpectrum3:                         libSpectrum.dll libHist.dll libMatrix.dll
-Library.TSpectrumFit:                       libSpectrum.dll libHist.dll libMatrix.dll
-Library.TSpectrumTransform:                 libSpectrum.dll libHist.dll libMatrix.dll

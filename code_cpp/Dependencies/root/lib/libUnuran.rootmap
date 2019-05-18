@@ -1,7 +1,0 @@
-Library.TUnuran:                            libUnuran.dll libHist.dll libMathCore.dll
-Library.TUnuranBaseDist:                    libUnuran.dll libHist.dll libMathCore.dll
-Library.TUnuranContDist:                    libUnuran.dll libHist.dll libMathCore.dll
-Library.TUnuranDiscrDist:                   libUnuran.dll libHist.dll libMathCore.dll
-Library.TUnuranEmpDist:                     libUnuran.dll libHist.dll libMathCore.dll
-Library.TUnuranMultiContDist:               libUnuran.dll libHist.dll libMathCore.dll
-Library.TUnuranSampler:                     libUnuran.dll libHist.dll libMathCore.dll

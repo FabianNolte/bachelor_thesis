@@ -1,4 +1,0 @@
-Library.TAdvancedGraphicsDialog:            libFitPanel.dll libGui.dll libGpad.dll libHist.dll libGraf.dll libTree.dll libMathCore.dll
-Library.TFitEditor:                         libFitPanel.dll libGui.dll libGpad.dll libHist.dll libGraf.dll libTree.dll libMathCore.dll
-Library.TFitParametersDialog:               libFitPanel.dll libGui.dll libGpad.dll libHist.dll libGraf.dll libTree.dll libMathCore.dll
-Library.TTreeInput:                         libFitPanel.dll libGui.dll libGpad.dll libHist.dll libGraf.dll libTree.dll libMathCore.dll

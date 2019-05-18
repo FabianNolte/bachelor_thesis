@@ -1,6 +1,0 @@
-Library.TBufferXML:                         libXMLIO.dll libRIO.dll
-Library.TKeyXML:                            libXMLIO.dll libRIO.dll
-Library.TXMLEngine:                         libXMLIO.dll libRIO.dll
-Library.TXMLFile:                           libXMLIO.dll libRIO.dll
-Library.TXMLPlayer:                         libXMLIO.dll libRIO.dll
-Library.TXMLSetup:                          libXMLIO.dll libRIO.dll

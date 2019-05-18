@@ -1,5 +1,0 @@
-Library.TImageDump:                         libPostscript.dll libGraf.dll
-Library.TPDF:                               libPostscript.dll libGraf.dll
-Library.TPostScript:                        libPostscript.dll libGraf.dll
-Library.TSVG:                               libPostscript.dll libGraf.dll
-Library.TTeXDump:                           libPostscript.dll libGraf.dll

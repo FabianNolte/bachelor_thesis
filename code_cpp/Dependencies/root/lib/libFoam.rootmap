@@ -1,6 +1,0 @@
-Library.TFoam:                              libFoam.dll libHist.dll libMathCore.dll
-Library.TFoamCell:                          libFoam.dll libHist.dll libMathCore.dll
-Library.TFoamIntegrand:                     libFoam.dll libHist.dll libMathCore.dll
-Library.TFoamMaxwt:                         libFoam.dll libHist.dll libMathCore.dll
-Library.TFoamSampler:                       libFoam.dll libHist.dll libMathCore.dll
-Library.TFoamVect:                          libFoam.dll libHist.dll libMathCore.dll

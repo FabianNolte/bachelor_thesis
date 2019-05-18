@@ -1,5 +1,0 @@
-Library.TStructNode:                        libGviz3d.dll libGui.dll libGed.dll libGpad.dll libGraf3d.dll libGraf.dll libGeom.dll libRGL.dll
-Library.TStructNodeEditor:                  libGviz3d.dll libGui.dll libGed.dll libGpad.dll libGraf3d.dll libGraf.dll libGeom.dll libRGL.dll
-Library.TStructNodeProperty:                libGviz3d.dll libGui.dll libGed.dll libGpad.dll libGraf3d.dll libGraf.dll libGeom.dll libRGL.dll
-Library.TStructViewer:                      libGviz3d.dll libGui.dll libGed.dll libGpad.dll libGraf3d.dll libGraf.dll libGeom.dll libRGL.dll
-Library.TStructViewerGUI:                   libGviz3d.dll libGui.dll libGed.dll libGpad.dll libGraf3d.dll libGraf.dll libGeom.dll libRGL.dll

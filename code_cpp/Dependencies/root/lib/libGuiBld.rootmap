@@ -1,7 +1,0 @@
-Library.TGuiBldDragManager:                 libGuiBld.dll libGui.dll libGraf.dll libMathCore.dll
-Library.TGuiBldEditor:                      libGuiBld.dll libGui.dll libGraf.dll libMathCore.dll
-Library.TGuiBldGeometryFrame:               libGuiBld.dll libGui.dll libGraf.dll libMathCore.dll
-Library.TGuiBldHintsButton:                 libGuiBld.dll libGui.dll libGraf.dll libMathCore.dll
-Library.TGuiBldHintsEditor:                 libGuiBld.dll libGui.dll libGraf.dll libMathCore.dll
-Library.TGuiBldNameFrame:                   libGuiBld.dll libGui.dll libGraf.dll libMathCore.dll
-Library.TRootGuiBuilder:                    libGuiBld.dll libGui.dll libGraf.dll libMathCore.dll
