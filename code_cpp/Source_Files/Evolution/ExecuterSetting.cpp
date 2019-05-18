@@ -22,9 +22,6 @@ ExecuterSetting::ExecuterSetting(vector<int>& p_generationToSave, vector<int>& p
         while(*it_opt < *it_save) it_opt++;
         while(*it_opt_end > *it_save_end) it_opt_end--;
 
-        bool save = false;
-        bool opt = false;
-
         while(it_save != p_generationToSave.end()){
             pair<bool, bool> boolPair;
             int genNum;

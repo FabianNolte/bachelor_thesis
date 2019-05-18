@@ -46,7 +46,7 @@ int main()
 
 	const double evolutionStepSize = 0.001;
 	const double x_0_sampleArea[2] = {-10, 10};
-	const int num_x_0 = 50000;
+	const int num_x_0 = 5000;
 
 	const double plotArea[2] = {-10, 10};
 	const int histnum = 250;
@@ -71,7 +71,10 @@ int main()
 	//
 	//	PrimEvolution
 	//
-	Setting setting(E, m, w, b, evolutionStepSize);
+
+	vector<double> param {m, w, b};
+
+	Setting setting(E, param, evolutionStepSize);
 	Memory memory(generation_0);
 
 	W* w_func = new Prim_W(setting);
@@ -81,16 +84,16 @@ int main()
 	// P* p_func = new GuidedByHO0_P(setting);
 
 	EvolutionExecuter evolutionExecuter(memory, w_func, p_func, executerSetting);
-	double estimatedGroundStateEnergie = evolutionExecuter.run();
+	evolutionExecuter.run();
 
-
+	double estimatedGroundStateEnergie = memory.get_guessedGroundstateEnergy();
 
 	memory.print_savedGenerations();
 
-	memory.save_allGenerations("../data");
+	// memory.save_allGenerations("../data");
 
 	cout << endl << estimatedGroundStateEnergie << endl;
-	memory.plot_savedGenerations("../code_python/plot_x_0.py", "../data", plotArea[0], plotArea[1], histnum);
+	memory.plot_savedGenerations(plotArea[0], plotArea[1], histnum);
 
 
 	cout << endl << estimatedGroundStateEnergie << endl;

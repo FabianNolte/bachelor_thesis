@@ -10,7 +10,7 @@ class Memory{
 	private: 
 			// TODO maybe Generation insted of Generation* ? could be faster
         	map<int, Generation*> generations;
-			map<int, double> optEnergies;
+        	double guessedGroundstateEnergy;
 
 	public:
 		Memory();
@@ -23,6 +23,14 @@ class Memory{
 		~Memory();
 		// ~Memory - destructor, deletes all generations
 
+		void set_guessedGroundstateEnergy(double& p_guessedGroundstateEnergy);
+		// set_guessedGroundstateEnergy - setter function for set_guessedGroundstateEnergy
+		// @param double& p_set_guessedGroundstateEnergy - value to set
+
+		double& get_guessedGroundstateEnergy(void);
+		// get_guessedGroundstateEnergy - getter function for guessedGroundstateEnergy
+		// @return double& - value of guessedGroundstateEnergy
+
 		void add_generation(Generation* p_generation);
 		// add_generation - adds p_generation to generations
 		// @param Generation* p_generation - generation to add
@@ -31,6 +39,10 @@ class Memory{
 		// get_generation - getter function for a generation
 		// @param int p_generationNum - number of the generation to get
 		// @return Generation* - pointer on generation
+
+		int get_sizeGenerations(void);
+		// get_sizeGenerations - returns amount of storaged generations
+		// @return int - size of generations
 
 		void print_savedGenerations(void);
 		// print_savedGenerations - prints all currently saved generations
@@ -52,4 +64,13 @@ class Memory{
 		// @param double left_border - left border of the visalization
 		// @param double right_border - right border of the visalization
 		// @param int histnum - number of bins in the histogram
+
+
+		void plot_savedGenerations(double left_border, double right_border, int histnum);
+		// plot_savedGenerations - creats histograms of all saved generations using a python script
+		// @param double left_border - left border of the visalization
+		// @param double right_border - right border of the visalization
+		// @param int histnum - number of bins in the histogram
+
+
 };

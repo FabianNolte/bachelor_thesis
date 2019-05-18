@@ -8,17 +8,13 @@ using namespace std;
 class Setting{
     private:
         double E;
-        double m;
-        double w;
-        double b;
+        vector<double>* param;
         double evolution_stepSize;
     public:
-		Setting(double p_E, double p_m, double p_w, double p_b, double p_evolution_stepSize);
+		Setting(double p_E, vector<double>& p_param, double p_evolution_stepSize);
 		// Setting - constructor
 		// @param double p_E - energieterm for controling
-		// @param double p_m - mass
-		// @param double p_w - frequency
-		// @param double p_b - prefactor for x**4 term
+        // @param vector<doulbe>& p_param - params of the weight function
 		// @param double p_evolution_stepSize - size of the evolution steps
 
         // TODO getter func with return by reference ; faster
@@ -30,17 +26,9 @@ class Setting{
         // get_E - getter function for E
         // @return double& - returns E per reference
 
-        double& get_m(void);
-        // get_m - getter function for m
-        // @return double& - returns m per reference
-
-        double& get_w(void);
-        // get_w - getter function for w
-        // @return double& - returns w per reference
-
-        double& get_b(void);
-        // get_b - getter function for b
-        // @return double& - returns b per reference
+        vector<double>* get_param(void);
+        // get_param - getter function for param
+        // @return vector<double>* - returns param
 
         double& get_evolution_stepSize(void);
         // get_evolution_stepSize - getter function for evolution_stepSize

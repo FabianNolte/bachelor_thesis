@@ -10,11 +10,9 @@ using namespace std;
 //      Setting
 //
 
-Setting::Setting(double p_E, double p_m, double p_w, double p_b, double p_evolution_stepSize){
+Setting::Setting(double p_E, vector<double>& p_param, double p_evolution_stepSize){
         E = p_E;
-        m = p_m;
-        w = p_w;
-        b = p_b;
+        param = &p_param;
         evolution_stepSize = p_evolution_stepSize;
 }
 
@@ -35,16 +33,8 @@ double& Setting::get_E(void){
         return E;
 }
 
-double& Setting::get_m(void){
-        return m;
-}
-
-double& Setting::get_w(void){
-        return w;
-}
-
-double& Setting::get_b(void){
-        return b;
+vector<double>* Setting::get_param(void){
+        return param;
 }
 
 double& Setting::get_evolution_stepSize(void){

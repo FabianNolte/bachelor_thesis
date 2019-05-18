@@ -1,6 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <TH1D.h>
+#include <TCanvas.h>
+//#include <TRandom1.h>
 #include "../../Header_Files/Data/Memory.h"
 using namespace std;
 
@@ -34,6 +37,18 @@ Memory::~Memory(){
     for(auto i = generations.begin(); i != generations.end(); i++){
         delete i->second;   
     }
+}
+
+void Memory::set_guessedGroundstateEnergy(double& p_guessedGroundstateEnergy){
+    guessedGroundstateEnergy = p_guessedGroundstateEnergy;
+}
+
+double& Memory::get_guessedGroundstateEnergy(void){
+    return guessedGroundstateEnergy;
+}
+
+int Memory::get_sizeGenerations(void){
+    return generations.size();
 }
 
 void Memory::print_savedGenerations(void){
@@ -87,6 +102,29 @@ void Memory::plot_savedGenerations(string loc_pythonScript, string path, double 
         system(command.c_str());
         cout << "generation " << i->first << " ploted to " << path+"/"+dataname+".pdf" << endl;
         (*(i->second)).set_savePosition(path+"/"+dataname);
+    }
+}
+
+void Memory::plot_savedGenerations(double left_border, double right_border, int histnum){
+    TCanvas* canvas;
+    TH1D* h;
+    for(auto it = generations.begin(); it != generations.end(); it++){
+        canvas = new TCanvas();
+        canvas->cd(1);
+        string title = "generation " + to_string(it->first);
+        h = new TH1D("h", title.c_str(), histnum, left_border, right_border);
+        // TH1D* h = new TH1D("h", "asdf", 100, -10, 10);
+        for(int i = 0; i<it->second->get_length_x_n(); i++){
+            h->Fill((*(it->second))[i]);
+        }
+        h->SetMinimum(0);
+        h->Draw();
+        string savePosition = "../images/gen"+to_string(it->first)+".pdf";
+        canvas->Print(savePosition.c_str());
+        delete canvas;
+        delete h;
+       // h->SaveAs("gen"+to_string(it->first)+".pdf","pdf");
+
     }
 }
 	

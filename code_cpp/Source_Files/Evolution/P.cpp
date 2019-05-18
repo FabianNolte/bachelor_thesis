@@ -33,7 +33,7 @@ stack<double>* P::operator() (double& p_x_n, int& p_n, int& p_toGenerateNum){
 Prim_P::Prim_P(){}
 
 Prim_P::Prim_P(Setting& p_setting) : P(p_setting){
-    stDeviationValue = pow(p_setting.get_evolution_stepSize()/p_setting.get_m(), 0.5);
+    stDeviationValue = pow(p_setting.get_evolution_stepSize()/(*(p_setting.get_param()))[0], 0.5);
 }
 
 double Prim_P::stDeviation(double& p_x_n, int& p_n){
@@ -50,8 +50,8 @@ double Prim_P::meanShift(double& p_x_n, int& p_n){ return 0; }
 GuidedByHO0_P::GuidedByHO0_P() {}
 
 GuidedByHO0_P::GuidedByHO0_P(Setting& p_setting) : P(p_setting){
-    meanShiftFactor = - p_setting.get_evolution_stepSize() * p_setting.get_w();
-    stDeviationValue = p_setting.get_evolution_stepSize() * (1 - p_setting.get_evolution_stepSize() * p_setting.get_w());
+    meanShiftFactor = - p_setting.get_evolution_stepSize() * (*(p_setting.get_param()))[1];
+    stDeviationValue = p_setting.get_evolution_stepSize() * (1 - p_setting.get_evolution_stepSize() * (*(p_setting.get_param()))[1]);
 }
 
 

@@ -46,9 +46,9 @@ double& W::get_E(){
 Prim_W::Prim_W(){}
 
 Prim_W::Prim_W(Setting& p_setting) : W(p_setting){
-    m = p_setting.get_m();
-    w = p_setting.get_w();
-    b = p_setting.get_b();
+    m = (*(p_setting.get_param()))[0];
+    w = (*(p_setting.get_param()))[1];
+    b = (*(p_setting.get_param()))[2];
 }
 
 double Prim_W::weight(double& p_x, int& p_n){
@@ -62,7 +62,7 @@ double Prim_W::weight(double& p_x, int& p_n){
 GuidedByHO0_W::GuidedByHO0_W() {}
 
 GuidedByHO0_W::GuidedByHO0_W(Setting& p_setting) : W(p_setting){
-    b = p_setting.get_b();
+    b = (*(p_setting.get_param()))[2];
 }
 
 double GuidedByHO0_W::weight(double& p_x_n, int& p_n){

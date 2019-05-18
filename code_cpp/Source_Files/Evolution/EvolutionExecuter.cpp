@@ -21,7 +21,7 @@ EvolutionExecuter::EvolutionExecuter(Memory& p_Memory, W* p_W_x_n, P* p_P_x_n_to
 	replicationNum = 0;
 }
 
-double EvolutionExecuter::run(){
+void EvolutionExecuter::run(){
 
 	// TODO maybe statrgeneration point calc and then use; faster
 	Generation* gen_nMinus1 = memory->get_generation(0);
@@ -63,7 +63,7 @@ double EvolutionExecuter::run(){
 		delete gen_nMinus1;
 	}
 
-	return W_x_n->get_E();
+	memory->set_guessedGroundstateEnergy(W_x_n->get_E());
 }
 
 

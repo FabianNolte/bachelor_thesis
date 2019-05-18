@@ -45,8 +45,7 @@ class EvolutionExecuter
 		// @param P* P_x_n_to_x_nPlus1 - object which calculates P
 		// @param ExecuterSetting& p_ex_setting- TODO
 		
-		double run(void);
+		void run(void);
 		// run - rises the evolution of x_0
-		// @return - estimator for ground state energie
 };
 
