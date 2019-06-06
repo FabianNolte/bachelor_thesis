@@ -62,7 +62,7 @@
             "browse": {
                 "path": [
                     "${workspaceFolder}",
-                    "C:\\\\MinGW\\\\lib\\\\gcc\\\\mingw32\\\\8.2.0\\\\include\\\\c++"
+                    "C:\\\\\\\\MinGW\\\\\\\\lib\\\\\\\\gcc\\\\\\\\mingw32\\\\\\\\8.2.0\\\\\\\\include\\\\\\\\c++"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""

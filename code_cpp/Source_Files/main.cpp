@@ -18,34 +18,52 @@
 #include <stack>
 #include <vector>
 
-#include "../Header_Files/Evolution/EvolutionExecuter.h"
-#include "../Header_Files/Evolution/ExecuterSetting.h"
-#include "../Header_Files/Evolution/P.h"
-#include "../Header_Files/Evolution/W.h"
+#include <PathIntegral/Evolution/EvolutionExecuter.h>
+#include <PathIntegral/Evolution/ExecuterSetting.h>
+#include <PathIntegral/Evolution/P.h>
+#include <PathIntegral/Evolution/W.h>
+#include <PathIntegral/Evolution/EvolutionOrganizer.h>
 
-#include "../Header_Files/Data/Memory.h"
-#include "../Header_Files/Data/Setting.h"
-#include "../Header_Files/Data/Generation.h"
+#include <PathIntegral/Data/Memory.h>
+#include <PathIntegral/Data/MemoryWrapper.h>
+#include <PathIntegral/Data/Setting.h>
+#include <PathIntegral/Data/Generation.h>
 
-#include "../Header_Files/StartFunction.h"
-//#include "../Header_Files/Analyser.h"
+#include <PathIntegral/StartFunction.h>
+#include <PathIntegral/Analyser.h>
+
+#include <DiagDiscHamiltonian/Num_SG_Solver.h>
 
 using namespace std;
 
 
 
 
+double potential(double p_x, double* param){
+    return param[0] * pow(p_x, 2) + param[1] * pow(p_x, 4);
+}
 
 
 int main()
 {
-	const double E = 2;
-	const double m = 1;
-	const double w = 4;
-	const double b = 0;
+	cout.precision(16);
 
-	const double evolutionStepSize = 0.001;
-	const double x_0_sampleArea[2] = {-10, 10};
+	const double E = 0.5;
+	const double m = 1;
+	const double w = 1;
+	const double a = m*pow(w,2)/2;
+	const double b = 4;
+
+	double pot_param[2] = {a, b};
+
+//
+//	Path Integral
+//
+
+	const int 		num_of_memories 	=  20;
+	const double 	evolutionStepSize 	= 0.001;
+	const int 		evolutionStepNum 	= 3000;
+	const double x_0_sampleArea[2] = {-5, 5};
 	const int num_x_0 = 5000;
 
 	const double plotArea[2] = {-10, 10};
@@ -59,51 +77,72 @@ int main()
 	StartFunctionHO0 startFunctionHO0(m, w);
 	Generation* generation_0 = startFunctionHO0.calc_startingGeneration(x_0_sampleArea, num_x_0);
 
-	vector<int> generationToSave = {0, 50, 100, 150, 200, 250, 300};
+	vector<int> generationToSave; // = {0, 50, 100, 150, 200, 250, 300};
 	vector<int> generationToOpt;// = {0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 195, 200};// 
-	for(int i = 0; i <= 300; i+=5){
+	for(int i = 0; i <= evolutionStepNum; i+=5){
+		generationToSave.insert(generationToSave.end(), i);
+	}
+	for(int i = 0; i <= evolutionStepNum; i+=5){
 		generationToOpt.insert(generationToOpt.end(), i);
 	}
 
-	ExecuterSetting executerSetting(generationToSave, generationToOpt);
-	executerSetting.print();
 
 	//
 	//	PrimEvolution
 	//
 
-	vector<double> param {m, w, b};
 
-	Setting setting(E, param, evolutionStepSize);
-	Memory memory(generation_0);
+	Setting setting(E, m, pot_param, evolutionStepSize, num_of_memories);
 
-	W* w_func = new Prim_W(setting);
+	W* w_func = new Prim_W(setting, potential);
 	P* p_func = new Prim_P(setting);
 
 	// W* w_func = new GuidedByHO0_W(setting);
 	// P* p_func = new GuidedByHO0_P(setting);
 
-	EvolutionExecuter evolutionExecuter(memory, w_func, p_func, executerSetting);
-	evolutionExecuter.run();
 
-	double estimatedGroundStateEnergie = memory.get_guessedGroundstateEnergy();
+	ExecuterSetting executerSetting(generationToSave, generationToOpt, w_func, p_func);
+	executerSetting.print();
 
-	memory.print_savedGenerations();
+	MemoryWrapper memoryWrapper;
 
-	// memory.save_allGenerations("../data");
+	EvolutionOrganizer evolutionOrganizer(memoryWrapper, generation_0, setting, executerSetting);
+	evolutionOrganizer.run_allEvolutions();
 
-	cout << endl << estimatedGroundStateEnergie << endl;
-	memory.plot_savedGenerations(plotArea[0], plotArea[1], histnum);
+	// memoryWrapper.save_allMemories("../images");
+
+	// memory.print_savedGenerations();
+
+	// // memory.save_allGenerations("../data");
+
+	Analyser* analyser = new PrimAnalyser(memoryWrapper, setting, startFunctionHO0);
+	analyser->print_data();
+	analyser->plot_data("../images");
+	analyser->fit_data(4, 0.13);
+	// cout << endl << estimatedGroundStateEnergie << endl;
+
+//
+//	DiagDiscHamiltonian
+//
+    cout.precision(16);
+
+    int step_num = 201;
+    double boundary = 10;
+    double param_potential[2];
 
 
-	cout << endl << estimatedGroundStateEnergie << endl;
+    Num_SG_Solver solver(step_num, boundary, potential, pot_param);
+    solver.run();
+    // if(argc == 4)
+    //    solver.print_hamiltonian();{
+    // }
+    solver.print_eigenvalues();
 
-	system("pause");
+
+	cout << "end";
+	cin.get();
+    return 0;
 }
-
-
-
-
 
 // Programm ausführen: STRG+F5 oder "Debuggen" > Menü "Ohne Debuggen starten"
 // Programm debuggen: F5 oder "Debuggen" > Menü "Debuggen starten"
@@ -115,3 +154,48 @@ int main()
 //   4. Verwenden Sie das Fenster "Fehlerliste", um Fehler anzuzeigen.
 //   5. Wechseln Sie zu "Projekt" > "Neues Element hinzufügen", um neue Codedateien zu erstellen, bzw. zu "Projekt" > "Vorhandenes Element hinzufügen", um dem Projekt vorhandene Codedateien hinzuzufügen.
 //   6. Um dieses Projekt später erneut zu öffnen, wechseln Sie zu "Datei" > "Öffnen" > "Projekt", und wählen Sie die SLN-Datei aus.
+
+/*#include<iostream>
+#include<Eigen/Dense>
+#include<stdlib.h>
+#include<Num_SG_Solver.h>
+
+using namespace std;
+using namespace Eigen;
+
+int matrix_size = 200;
+
+// typedef Matrix<double, matrix_size, matrix_size> Matrix_matrix_size_d;
+
+double potential(double p_x, double* param){
+    return param[0] * pow(p_x, 2) + param[1] * pow(p_x, 4);
+}
+
+
+int main(int argc, char** argv){
+    cout.precision(16);
+
+    int step_num = atoi(argv[1]);
+    double boundary = atoi(argv[2]);
+    double param_potential[2];
+    param_potential[0] = 1./2;
+    param_potential[1] = 2;
+
+
+    Num_SG_Solver solver(step_num, boundary, potential, param_potential);
+    solver.run();
+    if(argc == 4)
+       solver.print_hamiltonian();{
+    }
+    solver.print_eigenvalues();
+    // cout << "hallo" << f.size() << endl;
+
+    // MatrixXd m(matrix_size, matrix_size);
+    // m(0,0) = 3;
+    // m(1,0) = 2.5;
+    // m(0,1) = -1;
+    // m(1,1) = m(1,0) + m(0,1);
+    // std::cout << m << std::endl;
+
+    return 0;
+}*/

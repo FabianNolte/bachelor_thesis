@@ -8,7 +8,13 @@
             "type": "shell",
             "command": "g++",
             "args": [
-                "-g", "main.cpp"
+                "-g", 
+                "-o",
+                "main",                 
+                "-I./eigen/",
+                "-pthread", "-std=c++11", "-m64", "-I/home/fabian/Projects/root/include", 
+                "main.cpp",
+                "-L/home/fabian/Projects/root/lib", "-lGui", "-lCore", "-lImt", "-lRIO", "-lNet", "-lHist", "-lGraf", "-lGraf3d", "-lGpad", "-lROOTDataFrame", "-lROOTVecOps", "-lTree", "-lTreePlayer", "-lRint", "-lPostscript", "-lMatrix", "-lPhysics", "-lMathCore", "-lThread", "-lMultiProc", "-pthread", "-lm", "-ldl", "-rdynamic", "-lMinuit"
             ],
             "group": "build",
         }

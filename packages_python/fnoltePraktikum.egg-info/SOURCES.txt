@@ -1,0 +1,9 @@
+setup.py
+fnoltePraktikum/ChiqFit.py
+fnoltePraktikum/ChiqProb.py
+fnoltePraktikum/__init__.py
+fnoltePraktikum.egg-info/PKG-INFO
+fnoltePraktikum.egg-info/SOURCES.txt
+fnoltePraktikum.egg-info/dependency_links.txt
+fnoltePraktikum.egg-info/not-zip-safe
+fnoltePraktikum.egg-info/top_level.txt

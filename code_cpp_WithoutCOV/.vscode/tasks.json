@@ -1,0 +1,83 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "echo",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-o",
+                "main",
+                "-I./eigen/",
+                "-I./Header_Files/",
+                "-pthread", "-std=c++11", "-m64", "-I/home/fabian/Projects/root/include",
+                "Source_Files/main.cpp",
+                "Source_Files/PathIntegral/StartFunction.cpp",
+                "Source_Files/PathIntegral/Analyser.cpp",
+                "Source_Files/PathIntegral/chiqFit.cpp",
+                "Source_Files/PathIntegral/Data/AnalyserData.cpp",
+                "Source_Files/PathIntegral/Data/Generation.cpp",
+                "Source_Files/PathIntegral/Data/Memory.cpp",
+                "Source_Files/PathIntegral/Data/MemoryWrapper.cpp",
+                "Source_Files/PathIntegral/Data/Setting.cpp",
+                "Source_Files/PathIntegral/Evolution/EvolutionOrganizer.cpp",
+                "Source_Files/PathIntegral/Evolution/EvolutionExecuter.cpp",
+                "Source_Files/PathIntegral/Evolution/ExecuterSetting.cpp",
+                "Source_Files/PathIntegral/Evolution/P.cpp",
+                "Source_Files/PathIntegral/Evolution/W.cpp",
+                "Source_Files/DiagDiscHamiltonian/Num_SG_Solver.cpp",
+                "-L/home/fabian/Projects/root/lib", "-lGui", "-lCore", "-lImt", "-lRIO", "-lNet", "-lHist", "-lGraf", "-lGraf3d", "-lGpad", "-lROOTDataFrame", "-lROOTVecOps", "-lTree", "-lTreePlayer", "-lRint", "-lPostscript", "-lMatrix", "-lPhysics", "-lMathCore", "-lThread", "-lMultiProc", "-pthread", "-lm", "-ldl", "-rdynamic", "-lMinuit"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "echoPIOnly",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-o",
+                "main",
+                "-I./Header_Files/",
+                "-pthread", "-std=c++11", "-m64", "-I/home/fabian/Projects/root/include",
+                "Source_Files/main_PIOnly.cpp",
+                "Source_Files/PathIntegral/StartFunction.cpp",
+                "Source_Files/PathIntegral/Analyser.cpp",
+                "Source_Files/PathIntegral/chiqFit.cpp",
+                "Source_Files/PathIntegral/Data/AnalyserData.cpp",
+                "Source_Files/PathIntegral/Data/Generation.cpp",
+                "Source_Files/PathIntegral/Data/Memory.cpp",
+                "Source_Files/PathIntegral/Data/MemoryWrapper.cpp",
+                "Source_Files/PathIntegral/Data/Setting.cpp",
+                "Source_Files/PathIntegral/Evolution/EvolutionOrganizer.cpp",
+                "Source_Files/PathIntegral/Evolution/EvolutionExecuter.cpp",
+                "Source_Files/PathIntegral/Evolution/ExecuterSetting.cpp",
+                "Source_Files/PathIntegral/Evolution/P.cpp",
+                "Source_Files/PathIntegral/Evolution/W.cpp",
+                "-L/home/fabian/Projects/root/lib", "-lGui", "-lCore", "-lImt", "-lRIO", "-lNet", "-lHist", "-lGraf", "-lGraf3d", "-lGpad", "-lROOTDataFrame", "-lROOTVecOps", "-lTree", "-lTreePlayer", "-lRint", "-lPostscript", "-lMatrix", "-lPhysics", "-lMathCore", "-lThread", "-lMultiProc", "-pthread", "-lm", "-ldl", "-rdynamic", "-lMinuit"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+        // },
+        // {
+        //     "label": "root",
+        //     "type": "shell",
+        //     "command": "Dependencies\\root\\bin\\thisroot.bat",
+        //     "args": [
+        //     ],
+        //     "group": {
+        //         "kind": "build",
+        //         "isDefault": true
+        //     }
+        // }
+    ]
+}
