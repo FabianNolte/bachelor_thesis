@@ -28,7 +28,7 @@ void W::opt(double& p_portionToAccept, Generation* p_generation){
     }
     averageWeight /= p_generation->get_length_x_n();
     E = log(p_portionToAccept)/evolution_stepSize + averageWeight;
-    cout << "opt in gen " << p_generation->generationNum << " with E opt to " << E << endl;
+    // cout << "opt in gen " << p_generation->generationNum << " with E opt to " << E << endl;
 }
 
 double& W::get_evolution_stepSize(){

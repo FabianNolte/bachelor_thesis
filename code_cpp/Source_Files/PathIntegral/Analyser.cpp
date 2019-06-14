@@ -138,9 +138,10 @@ void Analyser::fit_data(int p_NumOfEnergies, double p_minTau){
     cont_tau[0] = start_tau;
     cont_fit_value[0] = fit_fcn(output.beta, output.len_beta, cont_tau[0]);
     double tau_diff = (end_tau-start_tau)/cont_Num;
-    for(int i = 1; i < cont_Num; i++){
+    for(int i = 1; i < cont_Num;){
         cont_tau[i] = cont_tau[i-1]+tau_diff;
         cont_fit_value[i] = fit_fcn(output.beta, output.len_beta, cont_tau[i]);
+        i += 1;
     }
 
     TCanvas* canvas = new TCanvas(); 

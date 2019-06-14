@@ -40,7 +40,15 @@ using namespace std;
 
 
 double potential(double p_x, double* param){
-    return param[0] * pow(p_x, 2) + param[1] * pow(p_x, 4);
+	// return param[0] * pow(1-exp(-param[1]* p_x), 2);
+	// if(abs(p_x) < param[0]){
+	// 	return 0;
+	// }
+	// else{
+	// 	return 100000;
+	// }
+    // return abs(p_x) +0*param[0];//- param[0]*exp(-pow(p_x, 2)/param[1]) + param[0]; //param[0] * pow(p_x, 2) + param[1] * pow(p_x, 4);
+	return param[0] * pow(p_x, 2) + param[1] * pow(p_x, 4);
 }
 
 
@@ -52,19 +60,20 @@ int main()
 	const double m = 1;
 	const double w = 1;
 	const double a = m*pow(w,2)/2;
-	const double b = 4;
+	const double b = 4; //0.46;
 
 	double pot_param[2] = {a, b};
+	// double pot_param[1] = {a};
 
 //
 //	Path Integral
 //
 
-	const int 		num_of_memories 	=  20;
+	const int 		num_of_memories 	=  5;
 	const double 	evolutionStepSize 	= 0.001;
 	const int 		evolutionStepNum 	= 3000;
-	const double x_0_sampleArea[2] = {-5, 5};
-	const int num_x_0 = 5000;
+	const double x_0_sampleArea[2] = {-2, 2};
+	const int num_x_0 = 500;
 
 	const double plotArea[2] = {-10, 10};
 	const int histnum = 250;
@@ -79,7 +88,7 @@ int main()
 
 	vector<int> generationToSave; // = {0, 50, 100, 150, 200, 250, 300};
 	vector<int> generationToOpt;// = {0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 195, 200};// 
-	for(int i = 0; i <= evolutionStepNum; i+=5){
+	for(int i = 0; i <= evolutionStepNum; i+=50){
 		generationToSave.insert(generationToSave.end(), i);
 	}
 	for(int i = 0; i <= evolutionStepNum; i+=5){
@@ -118,7 +127,7 @@ int main()
 	Analyser* analyser = new PrimAnalyser(memoryWrapper, setting, startFunctionHO0);
 	analyser->print_data();
 	analyser->plot_data("../images");
-	analyser->fit_data(4, 0.13);
+	analyser->fit_data(3, 0.13);
 	// cout << endl << estimatedGroundStateEnergie << endl;
 
 //

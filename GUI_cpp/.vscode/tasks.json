@@ -1,0 +1,50 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558 
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "echo",
+            "command": "g++",
+            "args": [
+                "-g",
+                "main.cpp",
+                "-pthread",
+                "-std=c++11",
+                "-m64",
+                "-I./../libraries_cpp/root/include",
+                "-L./../libraries_cpp/root/lib",
+                "-lGui",
+                "-lCore",
+                "-lImt",
+                "-lRIO",
+                "-lNet",
+                "-lHist",
+                "-lGraf",
+                "-lGraf3d",
+                "-lGpad",
+                "-lROOTDataFrame",
+                "-lROOTVecOps",
+                "-lTree",
+                "-lTreePlayer",
+                "-lRint",
+                "-lPostscript",
+                "-lMatrix",
+                "-lPhysics",
+                "-lMathCore",
+                "-lThread",
+                "-lMultiProc",
+                "-pthread",
+                "-lm",
+                "-ldl",
+                "-rdynamic",
+                "-lMinuit"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

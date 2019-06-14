@@ -38,13 +38,13 @@ RealData::RealData(int p_pointNum,
     x = p_x;
     y = p_y;
 
-    // cout << "RD eigevalues of cov_y " << endl << p_cov_y.eigenvalues() << endl;
+    cout << "RD eigevalues of cov_y " << endl << p_cov_y.eigenvalues() << endl;
     // cout << "RD  cov_y " << endl << p_cov_y << endl;
     // double inv_min_cov_y = 1;
     // inv_min_cov_y /= p_cov_y.minCoeff();
     // inv_cov_y = (p_cov_y * inv_min_cov_y).inverse();
     inv_cov_y = p_cov_y.inverse();
-    // cout << "RD eigevalues of inv_cov_y " << endl << inv_cov_y.eigenvalues() << endl;
+    cout << "RD eigevalues of inv_cov_y " << endl << inv_cov_y.eigenvalues() << endl;
     // cout << "RD  inv_cov_y " << endl << inv_cov_y << endl;
     // cout << "wait ";
     // cin.get();
@@ -135,7 +135,7 @@ void ChiqFit::calc_chiq(int &npar, double *gin, double &f, double *par, int ifla
     // cout << "inv_cov_y " << data->inv_cov_y << endl;
     MatrixXd chiq = y_dev.transpose() * data->inv_cov_y * y_dev;
     // cout << "chiq.size() " << chiq.size() << endl;
-    cout << "chiq " << chiq(0, 0) << endl;
+    // cout << "chiq " << chiq(0, 0) << endl;
     f = chiq(0,0);
 
     // double chiq2 = 0;

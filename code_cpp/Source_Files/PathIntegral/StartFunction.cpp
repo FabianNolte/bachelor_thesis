@@ -38,6 +38,6 @@ StartFunctionHO0::StartFunctionHO0(const double& p_m, const double& p_w){
 }
 
 double StartFunctionHO0::operator() (double& p_x){
-	return 1./10;//max_startFunction;
+	return 1./4;//max_startFunction;
 	//return pow(m * w / PI, 0.25)* exp(-0.5 * m * w * pow(p_x, 2));
 }

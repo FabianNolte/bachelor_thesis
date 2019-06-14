@@ -61,15 +61,15 @@ void AnalyserData::calc_energy_gs_maxEvo(void){
 void AnalyserData::calc_value(void){
     for(int i = 0; i < num_of_points; i++){
         for(int j = 0; j <= i; j++){
-            if(i == j){
-                cov_value(i, j) = (calc_mixed_moment_two(values[i], values[j]) - calc_moment_one(values[i]) * calc_moment_one(values[j])) / (num_of_values - 1);
-            }
-            else{
-                cov_value(i, j) = 0;
-                cov_value(j, i) = 0;
-            }
-            // cov_value(i, j) = double((calc_mixed_moment_two(values[i], values[j]) - calc_moment_one(values[i]) * calc_moment_one(values[j])) / (num_of_values - 1));
-            // cov_value(j, i) = cov_value(i, j);
+            // if(i == j){
+            //     cov_value(i, j) = (calc_mixed_moment_two(values[i], values[j]) - calc_moment_one(values[i]) * calc_moment_one(values[j])) / (num_of_values - 1);
+            // }
+            // else{
+            //     cov_value(i, j) = 0;
+            //     cov_value(j, i) = 0;
+            // }
+            cov_value(i, j) = double((calc_mixed_moment_two(values[i], values[j]) - calc_moment_one(values[i]) * calc_moment_one(values[j])) / (num_of_values - 1));
+            cov_value(j, i) = cov_value(i, j);
         }
         // cov_value(i, i) = (calc_mixed_moment_two(values[i], values[i]) - calc_moment_one(values[i]) * calc_moment_one(values[i])) / (num_of_values - 1);
         cout << "cov_value(" << i << "," << i << ") " << cov_value(i, i) << endl;

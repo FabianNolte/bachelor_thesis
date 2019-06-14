@@ -11,9 +11,9 @@
                 "-g",
                 "-o",
                 "main",
-                "-I./eigen/",
+                "-I./../libraries_cpp/eigen/",
                 "-I./Header_Files/",
-                "-pthread", "-std=c++11", "-m64", "-I/home/fabian/Projects/root/include",
+                "-pthread", "-std=c++11", "-m64", "-I./../libraries_cpp/root/include",
                 "Source_Files/main.cpp",
                 "Source_Files/PathIntegral/StartFunction.cpp",
                 "Source_Files/PathIntegral/Analyser.cpp",
@@ -29,7 +29,7 @@
                 "Source_Files/PathIntegral/Evolution/P.cpp",
                 "Source_Files/PathIntegral/Evolution/W.cpp",
                 "Source_Files/DiagDiscHamiltonian/Num_SG_Solver.cpp",
-                "-L/home/fabian/Projects/root/lib", "-lGui", "-lCore", "-lImt", "-lRIO", "-lNet", "-lHist", "-lGraf", "-lGraf3d", "-lGpad", "-lROOTDataFrame", "-lROOTVecOps", "-lTree", "-lTreePlayer", "-lRint", "-lPostscript", "-lMatrix", "-lPhysics", "-lMathCore", "-lThread", "-lMultiProc", "-pthread", "-lm", "-ldl", "-rdynamic", "-lMinuit"
+                "-L./../libraries_cpp/root/lib", "-lGui", "-lCore", "-lImt", "-lRIO", "-lNet", "-lHist", "-lGraf", "-lGraf3d", "-lGpad", "-lROOTDataFrame", "-lROOTVecOps", "-lTree", "-lTreePlayer", "-lRint", "-lPostscript", "-lMatrix", "-lPhysics", "-lMathCore", "-lThread", "-lMultiProc", "-pthread", "-lm", "-ldl", "-rdynamic", "-lMinuit"
             ],
             "group": {
                 "kind": "build",
